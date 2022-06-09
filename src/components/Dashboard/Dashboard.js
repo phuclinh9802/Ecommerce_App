@@ -1,9 +1,12 @@
-import { ProductList } from './ProductList'
+import ProductList from "./ProductList/ProductList";
+
 
 const Dashboard = () => {
     return (
         <>
+            <ProductList />
         </>
+
     )
 }
 

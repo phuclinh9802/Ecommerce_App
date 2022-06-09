@@ -7,11 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggling } from '../../reducers/toggleSlice'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
+import { SIGN_IN, SIGN_UP, LOG_OUT, USER } from '../../constants/auth';
 
-const SIGN_UP = "Sign Up"
-const SIGN_IN = "Sign In"
-const LOG_OUT = "Log Out"
-const USER = "Phillip"
 
 const Navbar = () => {
     const [searchText, setSearchText] = useState('')
