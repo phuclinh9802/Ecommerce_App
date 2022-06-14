@@ -13,8 +13,8 @@ const ProductList = () => {
         <Grid templateColumns='repeat(5, 1fr)' gap={6}>
             {products.map((product, i) => {
                 return (
-                    <Box>
-                        <ProductCard key={i} image={product.image} productName={product.productName} description={product.description} rating={product.rating} />
+                    <Box key={i}>
+                        <ProductCard image={product.image} productName={product.productName} description={product.description} rating={product.rating} />
                     </Box>
                 )
             })}

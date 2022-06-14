@@ -1,125 +1,145 @@
-import React, { Component, useState, forwardRef } from "react";
+import React, { Component, useState, useMemo } from "react";
 import { Navigate, Link } from "react-router-dom";
 import isAuthenticated from "../../lib/authenticate";
 import {
-  Modal,
-  ModalOverlay,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalCloseButton,
+    Modal,
+    ModalOverlay,
+    ModalBody,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalCloseButton,
 } from "@chakra-ui/react";
 import {
-  useDisclosure,
-  Button,
-  FormLabel,
-  FormControl,
-  Input,
-  Link as ChakraLink,
+    useDisclosure,
+    Button,
+    FormLabel,
+    FormControl,
+    Input,
+    Link as ChakraLink,
 } from "@chakra-ui/react";
-import { SIGN_IN } from "../../constants/auth";
 
-const Login = (props) => {
-  const [loggedIn, setLoggedIn] = useState(isAuthenticated());
-  const { isOpen, onClose, onOpen } = props;
-  //   const { isOpen, onClose, onOpen } = useDisclosure();
+import { connect } from 'react-redux'
+import { loginUser } from '../../actions/authActions'
+import classnames from 'classnames'
+import PropTypes from 'prop-types'
 
-  const initialRef = React.useRef();
-  const finalRef = React.useRef();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
 
-    let form = e.target;
-    let formData = new FormData(form);
-    let params = new URLSearchParams();
-    params.append("username", formData.get("username"));
-    params.append("password", formData.get("password"));
-    params.append("remember", formData.get("remember"));
+class Login extends Component {
+    //   const [loggedIn, setLoggedIn] = useState(isAuthenticated());
+    constructor(props) {
+        super(props);
+        this.state = { email: "", password: "", errors: {} }
+        this.initialRef = React.createRef()
+        this.finalRef = React.createRef()
+    }
 
-    // POST request to server
-    fetch("/api/login", {
-      method: "POST",
-      body: params,
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        localStorage.setItem("token", data.token);
-        setLoggedIn(true);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.push('/dashboard')
+        }
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            })
+        }
+    }
 
-  // if (loggedIn) {
-  //     return (
-  //         <Navigate to={{ pathname: '/', state: { from: this.props.location } }}
-  //         />
-  //     )
-  // }
+    handleChange = (e) => {
+        this.setState({ ...this.state, [e.target.name]: e.target.value })
+    }
 
-  // else {
-  return (
-    <>
-      {/* <Button colorScheme="red" onClick={onOpen}>
-        {SIGN_IN}
-      </Button> */}
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
-        <ModalOverlay />
-        <form onSubmit={handleSubmit}>
-          <ModalContent>
-            <ModalHeader>Login</ModalHeader>
-            <ModalBody pb={6}>
-              <ModalCloseButton />
-              <FormControl isRequired>
-                <FormLabel>Username</FormLabel>
-                <Input ref={initialRef} placeholder="Username" />
-              </FormControl>
-              <FormControl isRequired>
-                <FormLabel>Password</FormLabel>
-                <Input type="password" placeholder="Password" required />
-              </FormControl>
-            </ModalBody>
-            <ModalFooter>
-              <Link to="/login">
-                <ChakraLink
-                  mr={10}
-                  onClick={() => {
-                    onClose();
-                    onOpen();
-                  }}
+    handleSubmit = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const userLogin = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        this.props.loginUser(userLogin)
+        console.log(userLogin)
+
+    }
+
+    render() {
+        const { errors } = this.state;
+        const { isOpen, onClose, onOpen } = this.props;
+
+        // POST request to server
+        return (
+            <>
+                <Modal
+                    initialFocusRef={this.initialRef}
+                    finalFocusRef={this.finalRef}
+                    isOpen={isOpen}
+                    onClose={onClose}
                 >
-                  Already have an account? Click here
-                </ChakraLink>
-              </Link>
-              <Link to="/dashboard">
-                <Button
-                  type="submit"
-                  variantColor="teal"
-                  variant="outline"
-                  width="full"
-                  mr={3}
-                >
-                  Login
-                </Button>
-              </Link>
-            </ModalFooter>
-          </ModalContent>
-        </form>
-      </Modal>
-    </>
-  );
-};
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Login</ModalHeader>
+                        <ModalBody pb={6}>
+                            <ModalCloseButton />
+                            <form id="login-form" noValidate onSubmit={(e) => this.handleSubmit(e)}>
+                                <FormControl isRequired>
+                                    <FormLabel>Email</FormLabel>
+                                    <Input className={classnames("", { invalid: errors.email || errors.emailnotfound })} name="email" ref={this.initialRef} onChange={this.handleChange} value={this.state.email} error={errors.email} type="email" placeholder="johndoe@gmail.com" />
+                                    <span className="red-text">
+                                        {errors.email}
+                                        {errors.emailnotfound}
+                                    </span>
+                                </FormControl>
+                                <FormControl isRequired>
+                                    <FormLabel>Password</FormLabel>
+                                    <Input className={classnames("", { invalid: errors.password || errors.passwordincorrect })} name="password" onChange={this.handleChange} value={this.state.password} error={errors.password} type="password" placeholder="Password" required />
+                                    <span className="red-text">
+                                        {errors.password}
+                                        {errors.passwordincorrect}
+                                    </span>
+                                </FormControl>
+                            </form>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Link to="/login">
+                                <ChakraLink
+                                    mr={10}
+                                    onClick={() => {
+                                        onClose();
+                                        onOpen();
+                                    }}
+                                >
+                                    Already have an account? Click here
+                                </ChakraLink>
+                            </Link>
+                            <Button
+                                type="submit"
+                                variantColor="teal"
+                                variant="outline"
+                                width="full"
+                                mr={3}
+                                form="login-form"
+                                onClick={onClose}
+                            >
+                                Login
+                            </Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
+            </>
+        );
+    };
+}
 // }
 
-export default Login;
+Login.propTypes = {
+    loginUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+})
+
+export default connect(mapStateToProps, { loginUser })(Login);
