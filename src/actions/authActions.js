@@ -8,6 +8,7 @@ import {
 
 // register
 export const registerUser = (userData, history) => dispatch => {
+    console.log("registerUser " + JSON.stringify(userData))
     axios.post("/api/users/register", userData)
         .then(res => history.push("/login")) //redirect to login
         .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
@@ -15,7 +16,7 @@ export const registerUser = (userData, history) => dispatch => {
 
 // login 
 export const loginUser = userData => dispatch => {
-    console.log("loginUser" + userData.email)
+    console.log("loginUser " + userData.email)
     axios.post("/api/users/login", userData)
         .then(res => {
             // save to localStorage
@@ -29,10 +30,13 @@ export const loginUser = userData => dispatch => {
             // set current user
             dispatch(setCurrentUser(decoded))
         })
-        .catch(err => dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-        }))
+        .catch(err => {
+            console.log(err.response.data);
+            return dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        })
 
 }
 

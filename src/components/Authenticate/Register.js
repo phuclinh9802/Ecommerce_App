@@ -24,6 +24,8 @@ import { connect } from 'react-redux'
 import { registerUser } from "../../actions/authActions";
 import PropTypes from "prop-types";
 import classnames from 'classnames'
+import { CONFIRM_PASSWORD, EMAIL, FIRST_NAME, LAST_NAME, PASSWORD } from "../../constants/label";
+import { ACCOUNT_FOUND_MESSAGE } from "../../constants/messages";
 
 class Register extends Component {
     constructor(props) {
@@ -61,8 +63,8 @@ class Register extends Component {
             password: this.state.password,
             password2: this.state.password2,
         };
-        console.log(newUser)
         this.props.registerUser(newUser, this.props.history)
+        console.log(newUser)
     };
 
 
@@ -81,70 +83,70 @@ class Register extends Component {
                     finalFocusRef={this.finalRef}
                     isOpen={isOpen}
                     onClose={onClose}
-                    size="xl"
+                    size="2xl"
+
                 >
                     <ModalOverlay />
-                    <form noValidate onSubmit={this.handleSubmit}>
-                        <ModalContent>
-                            <ModalHeader>Login</ModalHeader>
-                            <ModalBody pb={6}>
-                                <ModalCloseButton />
+                    <ModalContent>
+                        <ModalHeader>Login</ModalHeader>
+                        <ModalBody pb={6}>
+                            <ModalCloseButton />
+                            <form id="register-form" noValidate onSubmit={this.handleSubmit}>
                                 <FormControl isRequired>
-                                    <FormLabel>Email</FormLabel>
+                                    <FormLabel>{EMAIL}</FormLabel>
                                     <Input className={classnames("", { invalid: errors.email })} name="email" onChange={this.handleChange} value={this.state.email} error={errors.email} ref={this.initialRef} placeholder="Username" />
                                     <span className="red-text">{errors.email}</span>
                                 </FormControl>
                                 <FormControl isRequired>
-                                    <FormLabel>First Name</FormLabel>
+                                    <FormLabel>{FIRST_NAME}</FormLabel>
                                     <Input className={classnames("", { invalid: errors.firstName })} name="firstName" onChange={this.handleChange} value={this.state.firstName} error={errors.firstName} placeholder="First Name..." />
                                     <span className="red-text">{errors.firstName}</span>
                                 </FormControl>
                                 <FormControl isRequired>
-                                    <FormLabel>Last Name</FormLabel>
+                                    <FormLabel>{LAST_NAME}</FormLabel>
                                     <Input className={classnames("", { invalid: errors.lastName })} name="lastName" onChange={this.handleChange} value={this.state.lastName} error={errors.lastName} placeholder="Last Name..." />
                                     <span className="red-text">{errors.lastName}</span>
                                 </FormControl>
                                 <FormControl isRequired>
-                                    <FormLabel>Password</FormLabel>
+                                    <FormLabel>{PASSWORD}</FormLabel>
                                     <Input className={classnames("", { invalid: errors.password })} name="password" onChange={this.handleChange} value={this.state.password} error={errors.password} type="password" placeholder="Password" />
                                     <span className="red-text">{errors.password}</span>
                                 </FormControl>
                                 <FormControl isRequired>
-                                    <FormLabel>Confirm Password</FormLabel>
+                                    <FormLabel>{CONFIRM_PASSWORD}</FormLabel>
                                     <Input className={classnames("", { invalid: errors.password2 })} name="password2" onChange={this.handleChange} value={this.state.password2} error={errors.password2} type="password" placeholder="Confirm Password" />
                                     <span className="red-text">{errors.password2}</span>
                                 </FormControl>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Link to="/login">
-                                    <ChakraLink
-                                        mr={10}
-                                        onClick={() => {
-                                            onClose();
-                                            onOpen();
-                                        }}
-                                    >
-                                        Already have an account? Click here
-                                    </ChakraLink>
-                                </Link>
-                                <Link to="/">
-                                    <Button
-                                        type="submit"
-                                        variantColor="teal"
-                                        variant="outline"
-                                        width="full"
-                                        mr={3}
-                                        onClick={() => {
-                                            onClose();
-                                            console.log("success!");
-                                        }}
-                                    >
-                                        Register
-                                    </Button>
-                                </Link>
-                            </ModalFooter>
-                        </ModalContent>
-                    </form>
+                            </form>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Link to="/login">
+                                <ChakraLink
+                                    mr={10}
+                                    onClick={() => {
+                                        onClose();
+                                        onOpen();
+                                    }}
+                                >
+                                    {ACCOUNT_FOUND_MESSAGE}
+                                </ChakraLink>
+                            </Link>
+                            <Button
+                                type="submit"
+                                variantColor="teal"
+                                variant="outline"
+                                width="-webkit-fit-content"
+                                mr={3}
+                                form="register-form"
+                                onClick={() => {
+                                    onClose();
+                                    console.log("success!");
+                                }}
+                            >
+                                Register
+                            </Button>
+                        </ModalFooter>
+                    </ModalContent>
                 </Modal>
             </>
         );

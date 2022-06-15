@@ -8,6 +8,8 @@ import {
 }
     from "@chakra-ui/react";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 const ProductCard = (props) => {
     const { image, productName, description, rating } = props
     return (
@@ -33,6 +35,9 @@ const ProductCard = (props) => {
                     </Stack>
                     <Flex mt={4} >
                         <Spacer />
+                        <Button pt={5} pb={5} mr={2} variant="ghost" size="xs" justifyContent='center'>
+                            <img src="img/heart.png" width="24px" height="24px" />
+                        </Button>
                         <Button p="5" mr={2} variant="solid"
                             colorScheme="green" size="md" justifyContent='center'>
                             {BUY_BUTTON}

@@ -6,6 +6,16 @@ import {
     Button,
     HStack,
     useDisclosure,
+    useToast
+} from "@chakra-ui/react";
+import {
+    Modal,
+    ModalOverlay,
+    ModalBody,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalCloseButton,
 } from "@chakra-ui/react";
 import { data } from "../../data/data";
 // import { Link } from 'react-scroll';
@@ -13,7 +23,7 @@ import SearchBar from "material-ui-search-bar";
 import { useSelector, useDispatch } from "react-redux";
 import { toggling } from "../../reducers/toggleSlice";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Login from "../Authenticate/Login";
 import Register from "../Authenticate/Register";
 import { connect } from 'react-redux'
@@ -21,45 +31,46 @@ import { logOutUser } from '../../actions/authActions'
 import PropTypes from 'prop-types'
 
 import { SIGN_IN, SIGN_UP, LOG_OUT, USER } from "../../constants/auth";
+import { BRAND, CONFIRM_MESSAGE } from "../../constants/messages";
+import { CANCEL } from "../../constants/button";
 
 const Navbar = (props) => {
     const [searchText, setSearchText] = useState("");
     const auth = useSelector((state) => state.auth)
     const { user, isAuthenticated } = auth;
-    console.log(user)
-    console.log(isAuthenticated)
-    //   const [user, setUser] = useState("");
-    // const [toggle, setToggle] = useState(false)
+    const errors = useSelector((state) => state.errors)
+    console.log("Navbar: " + user.firstName)
+    console.log("Navbar: " + isAuthenticated)
+
+    // login modal
     const { onOpen, isOpen, onClose } = useDisclosure();
+
+    // toast for notification
+    // const toast = useToast()
+
+    // register modal 
     const {
         onOpen: onOpenRegisterModal,
         isOpen: isOpenRegisterModal,
         onClose: onCloseRegisterModal,
     } = useDisclosure();
 
+    // logout modal
+    const {
+        onOpen: onOpenLogOut,
+        isOpen: isOpenLogOut,
+        onClose: onCloseLogOut,
+    } = useDisclosure();
+
+
     const handleLogOut = e => {
         e.preventDefault();
+        onCloseLogOut();
+        for (var e in errors) { delete errors[e] }
         props.logOutUser();
     }
 
-    //   useEffect(() => {
-    //     fetch("/api/user", {
-    //       headers: {
-    //         Authorization: "Bearer " + localStorage.getItem("token"),
-    //       },
-    //     })
-    //       .then((res) => {
-    //         return res.json();
-    //       })
-    //       .then((user) => {
-    //         setUser(user);
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    //   });
 
-    let username = props.auth.user;
 
     return (
         <Box w="100%">
@@ -71,7 +82,7 @@ const Navbar = (props) => {
                 justify="space-between"
                 display={{ base: "none", md: "flex" }}
             >
-                <Button variant="solid">eComShop</Button>
+                <Button variant="solid">{BRAND}</Button>
                 <HStack as="nav">
                     <SearchBar
                         style={{ width: "1000px" }}
@@ -80,7 +91,7 @@ const Navbar = (props) => {
                         onRequestSearch={() => { }}
                     />
                 </HStack>
-                {user ? (
+                {!isAuthenticated ? (
                     <HStack>
                         <Link to="/register">
                             <Button colorScheme="teal" onClick={onOpenRegisterModal}>
@@ -104,10 +115,19 @@ const Navbar = (props) => {
                             onOpen={onOpenRegisterModal}
                             isOpen={isOpen}
                             onClose={onClose}
+                            isAuthenticated={isAuthenticated}
                         />
                     </HStack>
                 ) : (
                     <HStack>
+                        <div style={{ display: "none" }}>
+                            <Login
+                                onOpen={onOpenRegisterModal}
+                                isOpen={isOpen}
+                                onClose={onClose}
+                                isAuthenticated={isAuthenticated}
+                            />
+                        </div>
                         <Button className="cart" variant="ghost">
                             <AddShoppingCartIcon />
                         </Button>
@@ -115,13 +135,31 @@ const Navbar = (props) => {
                         <Link to="/logout">
                             <Button
                                 colorScheme="red"
-                                onClick={handleLogOut}
+                                onClick={onOpenLogOut}
                             >
                                 {LOG_OUT}
                             </Button>
+                            <Modal isOpen={isOpenLogOut} onClose={onCloseLogOut}>
+                                <ModalOverlay />
+                                <ModalContent>
+                                    <ModalHeader>{LOG_OUT}</ModalHeader>
+                                    <ModalCloseButton />
+                                    <ModalBody>
+                                        {CONFIRM_MESSAGE}
+                                    </ModalBody>
+
+                                    <ModalFooter>
+                                        <Button colorScheme='red' mr={3} onClick={handleLogOut}>
+                                            {LOG_OUT}
+                                        </Button>
+                                        <Button variant='ghost' onClick={onClose}>{CANCEL}</Button>
+                                    </ModalFooter>
+                                </ModalContent>
+                            </Modal>
                         </Link>
                     </HStack>
-                )}
+                )
+                }
             </Flex>
         </Box>
     );
@@ -146,4 +184,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-export default connect(mapStateToProps, { logOutUser })(Navbar);
+export default connect(mapStateToProps, { logOutUser })(withRouter(Navbar));
