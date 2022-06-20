@@ -1,0 +1,6 @@
+.product-list {}
+
+.product-grid {
+  width: calc(100% - 220px);
+  margin-left: 220px;
+}

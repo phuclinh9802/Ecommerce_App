@@ -14,7 +14,28 @@ const products = [
         rating: 4
     },
     {
-        id: 1,
+        id: 3,
+        image: '/img/sweater.jpeg',
+        productName: 'Yellow Sweater',
+        description: 'A nice sweater for fall semester',
+        rating: 3
+    },
+    {
+        id: 4,
+        image: '/img/sweater.jpeg',
+        productName: 'Yellow Sweater',
+        description: 'A nice sweater for fall semester',
+        rating: 3
+    },
+    {
+        id: 5,
+        image: '/img/sweater.jpeg',
+        productName: 'Yellow Sweater',
+        description: 'A nice sweater for fall semester',
+        rating: 3
+    },
+    {
+        id: 6,
         image: '/img/sweater.jpeg',
         productName: 'Yellow Sweater',
         description: 'A nice sweater for fall semester',

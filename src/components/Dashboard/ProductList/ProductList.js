@@ -4,21 +4,48 @@ import Rating from 'react-rating';
 
 // import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core';
 
-import { SimpleGrid, Box, Grid } from '@chakra-ui/react';
+import { SimpleGrid, Box, Grid, GridItem } from '@chakra-ui/react';
 import products from '../../../data/product'
 import ProductCard from './ProductCard';
+import Sidebar from '../../Sidebar/Sidebar';
+import { useState } from 'react';
+
+import './ProductList.css'
+
+
 
 const ProductList = () => {
+    const [collapsed, setCollapsed] = useState(false);
+    // const [image, setImage] = useState(true);
+    const [toggled, setToggled] = useState(false);
+    const handleCollapsedChange = (checked) => {
+        setCollapsed(checked)
+    }
+
+    const handleToggleSidebar = (value) => {
+        setToggled(value)
+    }
+
     return (
-        <Grid templateColumns='repeat(5, 1fr)' gap={6}>
-            {products.map((product, i) => {
-                return (
-                    <Box key={i}>
-                        <ProductCard image={product.image} productName={product.productName} description={product.description} rating={product.rating} />
-                    </Box>
-                )
-            })}
-        </Grid>
+        <div className="product-list">
+            <div className={`sb ${toggled ? 'toggled' : ''}`}>
+                <Sidebar collapsed={collapsed} toggled={toggled} handleToggleSidebar={handleToggleSidebar} />
+
+            </div>
+            <div className='product-grid'>
+                <Grid templateColumns='repeat(3, 1fr)' gap={20} className='product-grid' >
+                    {products.map((product, i) => {
+                        return (
+                            <GridItem w='50%'>
+                                <Box key={i}>
+                                    <ProductCard image={product.image} productName={product.productName} description={product.description} rating={product.rating} />
+                                </Box>
+                            </GridItem>
+                        )
+                    })}
+                </Grid>
+            </div>
+        </div>
     )
 }
 

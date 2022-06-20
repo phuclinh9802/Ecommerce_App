@@ -14,12 +14,12 @@ const ProductCard = (props) => {
     const { image, productName, description, rating } = props
     return (
         <>
-            <Box w="500px" rounded="20px"
+            <Box w="300px" rounded="20px"
                 overflow="hidden" bg="gray.200" mt={10}>
                 <a href="https://reactjs.org" style={{ cursor: "pointer" }}>
                     <Image src=
                         {image}
-                        alt={productName} boxSize="500">
+                        alt={productName} boxSize="300">
                     </Image>
                 </a>
 
