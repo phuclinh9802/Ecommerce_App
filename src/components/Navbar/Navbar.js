@@ -30,9 +30,12 @@ import { connect } from 'react-redux'
 import { logOutUser } from '../../actions/authActions'
 import PropTypes from 'prop-types'
 
+
 import { SIGN_IN, SIGN_UP, LOG_OUT, USER } from "../../constants/auth";
 import { BRAND, CONFIRM_MESSAGE } from "../../constants/messages";
 import { CANCEL } from "../../constants/button";
+
+import './Navbar.css'
 
 const Navbar = (props) => {
     const [searchText, setSearchText] = useState("");
@@ -73,7 +76,7 @@ const Navbar = (props) => {
 
 
     return (
-        <Box w="100%">
+        <Box w="100%" className="nav-bar">
             <Flex
                 w="100%"
                 px="5"

@@ -18,7 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import './Dashboard.css';
 
 const slides = ["/img/eslide1.jpg", "/img/eslide2.jpg", "/img/eslide3.jpg"];
-const delay = 5000;
+const delay = 6000;
 
 const Dashboard = () => {
     const [index, setIndex] = useState(0);
