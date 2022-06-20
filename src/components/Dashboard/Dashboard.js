@@ -1,4 +1,4 @@
-import ProductList from "./ProductList/ProductList";
+import ProductList from "../ProductList/ProductList";
 import { withRouter } from 'react-router-dom'
 import {
     Alert,

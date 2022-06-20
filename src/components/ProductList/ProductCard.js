@@ -1,5 +1,5 @@
 import Rating from 'react-rating';
-import { BUY_BUTTON, ADD_TO_CART } from '../../../constants/button';
+import { BUY_BUTTON, ADD_TO_CART } from '../../constants/button';
 
 // import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core';
 import {
@@ -9,19 +9,27 @@ import {
     from "@chakra-ui/react";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link, useHistory, Route, Switch } from 'react-router-dom';
+import ProductDetails from '../ProductDetails/ProductDetails';
 
 const ProductCard = (props) => {
-    const { image, productName, description, rating } = props
+    const { id, image, productName, description, rating } = props;
+
+    const history = useHistory();
+    const handleLink = (e) => {
+        history.push(`/${id}`)
+    }
     return (
         <>
             <Box w="300px" rounded="20px"
                 overflow="hidden" bg="gray.200" mt={10}>
-                <a href="https://reactjs.org" style={{ cursor: "pointer" }}>
+                <Link to={{ pathname: `/products/${id}`, state: { id, image, productName, description, rating } }} style={{ cursor: "pointer" }}>
                     <Image src=
                         {image}
                         alt={productName} boxSize="300">
                     </Image>
-                </a>
+                </Link>
+
 
 
                 <Box p={5}>
@@ -55,8 +63,11 @@ const ProductCard = (props) => {
                         <Spacer />
                     </Flex>
                 </Box>
+
             </Box>
+
         </>
+
     )
 }
 

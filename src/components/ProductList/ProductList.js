@@ -5,10 +5,12 @@ import Rating from 'react-rating';
 // import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core';
 
 import { SimpleGrid, Box, Grid, GridItem } from '@chakra-ui/react';
-import products from '../../../data/product'
 import ProductCard from './ProductCard';
-import Sidebar from '../../Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import { useState } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import ProductDetails from '../ProductDetails/ProductDetails';
+import products from '../../data/product';
 
 import './ProductList.css'
 
@@ -37,15 +39,18 @@ const ProductList = () => {
                     {products.map((product, i) => {
                         return (
                             <GridItem w='50%'>
-                                <Box key={i}>
-                                    <ProductCard image={product.image} productName={product.productName} description={product.description} rating={product.rating} />
+                                <Box key={product.id}>
+                                    <ProductCard id={product.id} image={product.image} productName={product.productName} description={product.description} rating={product.rating} />
                                 </Box>
                             </GridItem>
+
                         )
                     })}
                 </Grid>
             </div>
+
         </div>
+
     )
 }
 

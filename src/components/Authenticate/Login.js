@@ -54,6 +54,7 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
     useEffect(() => {
         if (isAuthenticated) {
             onClose();
+            history.push('/dashboard')
             toast({
                 position: 'bottom-right',
                 title: 'Welcome, ' + user.firstName + " " + user.lastName,
@@ -62,6 +63,7 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
                 duration: 5000,
                 isClosable: true,
             })
+
         }
         else if (Object.keys(errors).length > 0) {
             toast({

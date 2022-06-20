@@ -85,7 +85,10 @@ const Navbar = (props) => {
                 justify="space-between"
                 display={{ base: "none", md: "flex" }}
             >
-                <Button variant="solid">{BRAND}</Button>
+                <Link to='/'>
+
+                    <Button variant="solid">{BRAND}</Button>
+                </Link>
                 <HStack as="nav">
                     <SearchBar
                         style={{ width: "1000px" }}
