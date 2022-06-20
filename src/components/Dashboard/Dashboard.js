@@ -10,41 +10,57 @@ import {
     HStack,
     Box,
     CloseButton,
-    useDisclosure
+    useDisclosure,
+    useToast
 } from '@chakra-ui/react'
 import { useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import './Dashboard.css';
+
+const slides = ["/img/eslide1.jpg", "/img/eslide2.jpg", "/img/eslide3.jpg"];
+const delay = 5000;
 
 const Dashboard = () => {
-    const { onClose } = useDisclosure();
-    const auth = useSelector((state) => state.auth)
-    const { isAuthenticated, user } = auth
-    let fullName = isAuthenticated ? user.firstName + " " + user.lastName : ""
+    const [index, setIndex] = useState(0);
+    const timeoutRef = useRef(null);
+
+    const resetTimeout = () => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+    }
+
+    useEffect(() => {
+        resetTimeout();
+        timeoutRef.current = setTimeout(
+            () => setIndex((prevIndex) => prevIndex === slides.length - 1 ? 0 : prevIndex + 1), delay
+        );
+
+        return () => {
+            resetTimeout();
+        }
+    }, [index])
 
     return (
         <>
-            {/* <Box>
-                <HStack>
-                    {isAuthenticated &&
-                        (<Alert status='success'>
-                            <AlertIcon />
-                            Welcome, {fullName}
-                            <CloseButton
-                                alignSelf='flex-start'
-                                position='relative'
-                                right={-1}
-                                top={-1}
-                                onClick={onClose}
-                            />
-                        </Alert>)
-                        //  : (
-                        //     <Alert status='error'>
-                        //         <AlertIcon />
-                        //         There is something wrong with your account, please try again.
-                        //     </Alert>
-                        // )
+            <div className="slideshow">
+                <div className="sliders" style={{ transform: `translate3d(${-index * 100}%, 0, 0)`, textAlign: "center" }}>
+                    {
+                        slides.map((slide, index) => (
+                            <div className="slide" key={index}>
+                                <img src={slide} className="slide-img" />
+                            </div>
+                        ))
                     }
-                </HStack>
-            </Box> */}
+                </div>
+                <div className="slider-dots">
+                    {slides.map((_, i) => (
+                        <div key={i} className={`slider-dot${index == i ? " active" : ""}`} onClick={() => {
+                            setIndex(i)
+                        }}></div>
+                    ))}
+                </div>
+            </div>
             <ProductList />
 
         </>

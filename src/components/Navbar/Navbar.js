@@ -132,7 +132,7 @@ const Navbar = (props) => {
                             <AddShoppingCartIcon />
                         </Button>
                         <span className="userName">Welcome, {user.firstName + " " + user.lastName}</span>
-                        <Link to="/logout">
+                        <Link to="/">
                             <Button
                                 colorScheme="red"
                                 onClick={onOpenLogOut}

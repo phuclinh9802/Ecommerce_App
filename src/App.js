@@ -26,11 +26,11 @@ function App() {
           <Switch>
             {/* <Route exact path='/dashboard' element={<PrivateRoute Component={<Dashboard />} />} /> */}
             {/* <Route path={["/", "/dashboard"]} element={<Dashboard />} /> */}
-            <Route exact path="/login" element={<Login />} />
+            {/* <Route exact path="/login" element={<Login />} /> */}
             {/* <Route exact path="/dashboard" element={<Dashboard />} /> */}
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-            <Route exact path="/register" element={<Register />} />
-            <Route exact path="/logout" element={<Logout />} />
+            {/* <Route exact path="/register" element={<Register />} />
+            <Route exact path="/logout" element={<Logout />} /> */}
           </Switch>
         </ChakraProvider>
 
