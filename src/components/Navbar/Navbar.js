@@ -1,12 +1,15 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import {
     Box,
-    Text,
     Flex,
     Button,
     HStack,
     useDisclosure,
-    useToast
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverHeader,
+    Portal
 } from "@chakra-ui/react";
 import {
     Modal,
@@ -36,6 +39,7 @@ import { BRAND, CONFIRM_MESSAGE } from "../../constants/messages";
 import { CANCEL } from "../../constants/button";
 
 import './Navbar.css'
+import ShoppingCartButton from "../ShoppingCartButton";
 
 const Navbar = (props) => {
     const [searchText, setSearchText] = useState("");
@@ -134,9 +138,7 @@ const Navbar = (props) => {
                                 isAuthenticated={isAuthenticated}
                             />
                         </div>
-                        <Button className="cart" variant="ghost">
-                            <AddShoppingCartIcon />
-                        </Button>
+                        <ShoppingCartButton />
                         <span className="userName">Welcome, {user.firstName + " " + user.lastName}</span>
                         <Link to="/">
                             <Button
