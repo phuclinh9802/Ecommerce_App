@@ -20,9 +20,7 @@ import {
   Link as ChakraLink,
 } from "@chakra-ui/react";
 
-import { useSelector } from "react-redux";
-
-import { connect } from "react-redux";
+import { useSelector, connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 import PropTypes from "prop-types";
@@ -82,7 +80,7 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
         isClosable: true,
       });
     }
-  }, []);
+  }, [isAuthenticated]);
 
   //   if (isAuthenticated) {
   //     onClose();

@@ -12,7 +12,6 @@ import {
 
 // register
 export const registerUser = (userData, history) => (dispatch) => {
-  console.log("registerUser " + JSON.stringify(userData));
   axios
     .post("/api/users/register", userData)
     .then((res) => history.push("/login")) //redirect to login
@@ -21,7 +20,6 @@ export const registerUser = (userData, history) => (dispatch) => {
 
 // login
 export const loginUser = (userData) => (dispatch) => {
-  console.log("loginUser " + userData.email);
   axios
     .post("/api/users/login", userData)
     .then((res) => {
@@ -55,14 +53,8 @@ export const currentUser = () => (dispatch) => {
       // get token
       const data = res.data;
 
-      //   const user = {
-      //     firstName,
-      //     lastName,
-      //   };
-
       if (token) {
         dispatch(getCurrentUser(data));
-        console.log("currentUser " + JSON.stringify(data));
       }
     })
     .catch((err) => {
