@@ -39,6 +39,7 @@ import { CANCEL } from "../../constants/button";
 
 import "./Navbar.css";
 import ShoppingCartButton from "../ShoppingCartButton";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 
 const Navbar = (props) => {
   const [searchText, setSearchText] = useState("");
@@ -134,41 +135,31 @@ const Navbar = (props) => {
             />
           </HStack>
         ) : (
-          <HStack>
-            <div style={{ display: "none" }}>
-              <Login
-                onOpen={onOpenRegisterModal}
-                isOpen={isOpen}
-                onClose={onClose}
-                isAuthenticated={isAuthenticated}
-              />
-            </div>
+          <HStack spacing={4}>
             <ShoppingCartButton />
             <span className="userName">
               Welcome, {me.firstName + " " + me.lastName}
             </span>
-            <Link to="/">
-              <Button colorScheme="red" onClick={onOpenLogOut}>
-                {LOG_OUT}
-              </Button>
-              <Modal isOpen={isOpenLogOut} onClose={onCloseLogOut}>
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>{LOG_OUT}</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>{CONFIRM_MESSAGE}</ModalBody>
+            <Button size="sm" colorScheme="red" onClick={onOpenLogOut}>
+              <PowerSettingsNewIcon />
+            </Button>
+            <Modal isOpen={isOpenLogOut} onClose={onCloseLogOut}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>{LOG_OUT}</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>{CONFIRM_MESSAGE}</ModalBody>
 
-                  <ModalFooter>
-                    <Button colorScheme="red" mr={3} onClick={handleLogOut}>
-                      {LOG_OUT}
-                    </Button>
-                    <Button variant="ghost" onClick={onClose}>
-                      {CANCEL}
-                    </Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
-            </Link>
+                <ModalFooter>
+                  <Button colorScheme="red" mr={3} onClick={handleLogOut}>
+                    {LOG_OUT}
+                  </Button>
+                  <Button variant="ghost" onClick={onCloseLogOut}>
+                    {CANCEL}
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
           </HStack>
         )}
       </Flex>

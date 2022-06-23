@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect, useRef } from "react";
-import { withRouter, Link, useHistory } from "react-router-dom";
+import { withRouter, Link, useHistory, useLocation } from "react-router-dom";
 import { isEmpty } from "is-empty";
 import {
   Modal,
@@ -43,6 +43,7 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
   const toast = useToast();
 
   const history = useHistory();
+  const location = useLocation();
   // const { isOpen, onClose, onOpen, onNotification } = props;
   const errors = useSelector((state) => state.errors);
   // console.log("Login: " + isAuthenticated)
@@ -57,19 +58,10 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
   // console.log(errors.password)
 
   console.log("isAuthenticated: " + isAuthenticated);
-
+  console.log(location.pathname);
   useEffect(() => {
-    if (isAuthenticated) {
-      onClose();
-      history.push("/dashboard");
-      toast({
-        position: "bottom-right",
-        title: "Welcome, " + me.firstName + " " + me.lastName,
-        description: "We're glad to have you here!",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
+    if (isAuthenticated && location.pathname !== "/login") {
+      history.push(location.pathname);
     } else if (Object.keys(errors).length > 0) {
       toast({
         position: "bottom-right",
@@ -81,28 +73,6 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
       });
     }
   }, [isAuthenticated]);
-
-  //   if (isAuthenticated) {
-  //     onClose();
-  //     history.push("/dashboard");
-  //     toast({
-  //       position: "bottom-right",
-  //       title: "Welcome, " + user.firstName + " " + user.lastName,
-  //       description: "We're glad to have you here!",
-  //       status: "success",
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //   } else if (Object.keys(errors).length > 0) {
-  //     toast({
-  //       position: "bottom-right",
-  //       title: "Please check your username/password",
-  //       description: JSON.stringify(errors),
-  //       status: "error",
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //   }
 
   const handleChange = (e) => {
     setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
@@ -116,6 +86,16 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     loginUser(userInfo);
+    history.push("/dashboard");
+    onClose();
+    toast({
+      position: "bottom-right",
+      title: "Welcome, " + me.firstName + " " + me.lastName,
+      description: "We're glad to have you here!",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
     console.log(userInfo);
   };
 
@@ -213,122 +193,6 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
     </>
   );
 };
-
-// class Login extends Component {
-//     //   const [loggedIn, setLoggedIn] = useState(isAuthenticated());
-//     constructor(props) {
-//         super(props);
-//         this.state = { email: "", password: "", errors: {} }
-//         this.initialRef = React.createRef()
-//         this.finalRef = React.createRef()
-//     }
-
-//     componentWillReceiveProps(nextProps) {
-//         console.log("nextProps: " + nextProps.location.pathname)
-//         console.log("this.props: " + this.props.location.pathname)
-//         console.log(nextProps.auth.isAuthenticated + " comp")
-//         if (nextProps.auth.isAuthenticated && nextProps.location.pathname == this.props.location.pathname) {
-//             console.log("isAuthenticated")
-//             this.props.history.push('/dashboard')
-//         }
-//         // if (nextProps.errors) {
-//         //     this.setState({
-//         //         errors: nextProps.errors
-//         //     })
-//         // }
-//     }
-
-//     handleChange = (e) => {
-//         this.setState({ ...this.state, [e.target.name]: e.target.value })
-//     }
-
-//     handleSubmit = (e) => {
-//         e.preventDefault();
-//         e.stopPropagation();
-//         const userLogin = {
-//             email: this.state.email,
-//             password: this.state.password
-//         }
-//         this.props.loginUser(userLogin)
-//         console.log(userLogin)
-
-//     }
-
-//     render() {
-//         const { errors } = this.state;
-//         const { isOpen, onClose, onOpen, onNotification } = this.props;
-//         const { auth } = this.props
-//         console.log("this.props.auth.isAuthenticated: " + auth.isAuthenticated);
-
-//         const onSubmit = () => {
-//             onClose();
-//             onNotification();
-//         }
-
-//         // POST request to server
-//         return (
-//             <>
-//                 <Modal
-//                     initialFocusRef={this.initialRef}
-//                     finalFocusRef={this.finalRef}
-//                     isOpen={isOpen}
-//                     onClose={onClose}
-//                     size="xl"
-//                 >
-//                     <ModalOverlay />
-//                     <ModalContent>
-//                         <ModalHeader>Login</ModalHeader>
-//                         <ModalBody pb={6}>
-//                             <ModalCloseButton />
-//                             <form id="login-form" noValidate onSubmit={(e) => this.handleSubmit(e)}>
-//                                 <FormControl isRequired>
-//                                     <FormLabel>Email</FormLabel>
-//                                     <Input className={classnames("", { invalid: errors.email || errors.emailnotfound })} name="email" ref={this.initialRef} onChange={this.handleChange} value={this.state.email} error={errors.email} type="email" placeholder="johndoe@gmail.com" />
-//                                     <span className="red-text">
-//                                         {errors.email}
-//                                         {errors.emailnotfound}
-//                                     </span>
-//                                 </FormControl>
-//                                 <FormControl isRequired>
-//                                     <FormLabel>Password</FormLabel>
-//                                     <Input className={classnames("", { invalid: errors.password || errors.passwordincorrect })} name="password" onChange={this.handleChange} value={this.state.password} error={errors.password} type="password" placeholder="Password" required />
-//                                     <span className="red-text">
-//                                         {errors.password}
-//                                         {errors.passwordincorrect}
-//                                     </span>
-//                                 </FormControl>
-//                             </form>
-//                         </ModalBody>
-//                         <ModalFooter>
-//                             <Link to="/login">
-//                                 <ChakraLink
-//                                     mr={10}
-//                                     onClick={() => {
-//                                         onClose();
-//                                         onOpen();
-//                                     }}
-//                                 >
-//                                     {ACCOUNT_NOT_FOUND_MESSAGE}
-//                                 </ChakraLink>
-//                             </Link>
-//                             <Button
-//                                 type="submit"
-//                                 variantColor="teal"
-//                                 variant="outline"
-//                                 width="-webkit-fit-content"
-//                                 mr={3}
-//                                 form="login-form"
-//                                 onClick={onSubmit}
-//                             >
-//                                 {LOG_IN}
-//                             </Button>
-//                         </ModalFooter>
-//                     </ModalContent>
-//                 </Modal>
-//             </>
-//         );
-//     };
-// }
 
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,

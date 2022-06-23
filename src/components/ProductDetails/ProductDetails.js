@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams, withRouter, Route, useHistory } from "react-router-dom";
-
+import Rating from "react-rating";
 import {
   Grid,
   GridItem,
@@ -16,6 +16,7 @@ import { ADD_TO_CART } from "../../constants/button";
 import { useSelector, connect } from "react-redux";
 import { currentProduct } from "../../actions/productActions";
 import PropTypes from "prop-types";
+import { StarBorder, Star, AttachMoney } from "@material-ui/icons";
 
 const ProductDetails = ({ currentProduct }) => {
   const products = useSelector((state) => state.products);
@@ -44,7 +45,32 @@ const ProductDetails = ({ currentProduct }) => {
       <GridItem className="product-content">
         <Stack spacing={3} className="product-row">
           <Text fontSize="2xl">{product.name}</Text>
-          <Text fontSize="lg">${product.price}</Text>
+          <span>
+            <Rating
+              initialRating={product.rating}
+              emptySymbol={
+                // <img
+                //   style={{ width: "24px", height: "24px" }}
+                //   src="/img/star-16.png"
+                // />
+                <StarBorder />
+              }
+              fullSymbol={
+                // <img
+                //   style={{ width: "24px", height: "24px" }}
+                //   src="/img/icons8-star-filled-16.png"
+                //   className="icon"
+                //   fractions={2}
+                // />
+                <Star color="warning" />
+              }
+            />
+          </span>
+          <hr />
+          <Text fontSize="3xl" fontWeight="semibold">
+            <AttachMoney fontSize="medium" />
+            {product.price}
+          </Text>
           <Text fontSize="md">{product.description}</Text>
         </Stack>
       </GridItem>

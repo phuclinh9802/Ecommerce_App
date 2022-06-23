@@ -1,21 +1,17 @@
 import Rating from "react-rating";
 import { BUY_BUTTON, ADD_TO_CART } from "../../constants/button";
 
-// import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core';
 import {
   Box,
   Image,
   Text,
   Stack,
-  useColorMode,
   Button,
   Flex,
   Spacer,
 } from "@chakra-ui/react";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { StarBorder, Star, FavoriteBorder, Favorite } from "@material-ui/icons";
 import { Link, useHistory, Route, Switch } from "react-router-dom";
-import ProductDetails from "../ProductDetails/ProductDetails";
 import { useSelector, connect } from "react-redux";
 import { currentProduct } from "../../actions/productActions";
 import PropTypes from "prop-types";
@@ -29,81 +25,64 @@ const ProductCard = (props) => {
     history.push(`/${id}`);
   };
   return (
-    <>
-      <Box w="300px" rounded="20px" overflow="hidden" bg="gray.200" mt={10}>
-        <Link
-          to={{
-            pathname: `/products/${id}`,
-          }}
-          style={{ cursor: "pointer" }}
-        >
-          <Image src={image} alt={productName} boxSize="300"></Image>
-        </Link>
+    <Box w="300px" rounded="20px" overflow="hidden" bg="" mt={10}>
+      <Link
+        to={{
+          pathname: `/products/${id}`,
+        }}
+        style={{ cursor: "pointer" }}
+      >
+        <Image src={image} alt={productName} boxSize="300"></Image>
+      </Link>
 
-        <Box p={5}>
-          <Stack align="center">
-            <Text as="h1" fontSize="2xl" fontWeight="" my={2}>
-              {productName}
-            </Text>
-            <Text fontWeight="bold">${price}</Text>
-          </Stack>
-          <Flex mt={4}>
-            <Spacer />
-            <Button
-              pt={5}
-              pb={5}
-              mr={2}
-              variant="ghost"
-              size="xs"
-              justifyContent="center"
-            >
-              <img src="img/heart.png" width="24px" height="24px" />
-            </Button>
-            <Button
-              p="5"
-              mr={2}
-              variant="solid"
-              colorScheme="green"
-              size="md"
-              justifyContent="center"
-            >
-              {BUY_BUTTON}
-            </Button>
-            <Button
-              variant="solid"
-              ml={2}
-              colorScheme="orange"
-              size="md"
-              justifyContent="center"
-            >
-              {ADD_TO_CART}
-            </Button>
-            <Spacer />
-          </Flex>
-          <Flex mt={4}>
-            <Spacer />
+      <Box p={2}>
+        <Stack align="start">
+          <Text as="h1" fontSize="2xl" fontWeight="" my={2}>
+            {productName}
             <Rating
-              initialRating={rating}
-              emptySymbol={
-                <img
-                  style={{ width: "24px", height: "24px" }}
-                  src="img/star-16.png"
-                />
-              }
-              fullSymbol={
-                <img
-                  style={{ width: "24px", height: "24px" }}
-                  src="img/icons8-star-filled-16.png"
-                  className="icon"
-                  fractions={2}
-                />
-              }
+              style={{ marginLeft: "25px" }}
+              start={0}
+              stop={1}
+              initialRating={product.rating}
+              emptySymbol={<FavoriteBorder />}
+              fullSymbol={<Favorite color="warning" />}
             />
-            <Spacer />
-          </Flex>
-        </Box>
+          </Text>
+          <Rating
+            initialRating={product.rating}
+            emptySymbol={<StarBorder />}
+            fullSymbol={<Star color="warning" />}
+          />
+          <Text fontSize="2xl" fontWeight="bold">
+            ${price}
+          </Text>
+        </Stack>
+        <Flex mt={4}>
+          <Spacer />
+
+          <Button
+            p="5"
+            mr={2}
+            variant="solid"
+            colorScheme="green"
+            size="md"
+            justifyContent="center"
+          >
+            {BUY_BUTTON}
+          </Button>
+          <Button
+            variant="solid"
+            ml={2}
+            colorScheme="orange"
+            size="md"
+            justifyContent="center"
+          >
+            {ADD_TO_CART}
+          </Button>
+          <Spacer />
+        </Flex>
       </Box>
-    </>
+    </Box>
   );
 };
 
