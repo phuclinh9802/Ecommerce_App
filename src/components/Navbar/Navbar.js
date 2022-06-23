@@ -115,6 +115,7 @@ const Navbar = (props) => {
           </Link>
 
           <Button
+            pt={1}
             // onClick={() => handleLightMode()}
             variant="unstyled"
             onClick={handleLightMode}

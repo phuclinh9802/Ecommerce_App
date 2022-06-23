@@ -57,30 +57,29 @@ const ProductCard = (props) => {
             ${price}
           </Text>
         </Stack>
-        <Flex mt={4}>
+        {/* <Flex mt={4}>
           <Spacer />
 
           <Button
-            p="5"
             mr={2}
-            variant="solid"
-            colorScheme="green"
+            variant="link"
+            colorScheme="black"
             size="md"
             justifyContent="center"
           >
             {BUY_BUTTON}
           </Button>
           <Button
-            variant="solid"
+            variant="link"
             ml={2}
-            colorScheme="orange"
+            colorScheme="black"
             size="md"
             justifyContent="center"
           >
             {ADD_TO_CART}
           </Button>
           <Spacer />
-        </Flex>
+        </Flex> */}
       </Box>
     </Box>
   );

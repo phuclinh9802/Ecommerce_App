@@ -35,7 +35,7 @@ const ProductDetails = ({ currentProduct }) => {
   return (
     <Grid
       className="product-details"
-      gridTemplateColumns={"400px 1fr 1fr"}
+      gridTemplateColumns={"1fr 1fr 1fr"}
       gap={10}
       p={20}
     >
@@ -75,7 +75,7 @@ const ProductDetails = ({ currentProduct }) => {
         </Stack>
       </GridItem>
       <GridItem>
-        <Grid gridTemplateColumns={"1fr"} gap={4} float="right">
+        <Grid gridTemplateColumns={"1fr"} ml={5} gap={4}>
           <GridItem>
             <Button width="200px" colorScheme="green">
               Buy Now
