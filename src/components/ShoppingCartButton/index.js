@@ -9,20 +9,18 @@ import {
   PopoverArrow,
   PopoverBody,
   PopoverFooter,
-  Portal
+  Portal,
 } from "@chakra-ui/react";
 
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
-import './index.css';
-
-
+import "./index.css";
 const ShoppingCartButton = (props) => {
   return (
     <>
       <Popover>
         <PopoverTrigger>
-          <Button className='cart' variant='ghost'>
+          <Button className="cart" colorScheme="white" variant="ghost">
             <AddShoppingCartIcon />
           </Button>
         </PopoverTrigger>
@@ -32,18 +30,20 @@ const ShoppingCartButton = (props) => {
             <PopoverHeader>Here's what you chose</PopoverHeader>
             <PopoverCloseButton />
             <PopoverBody>
-              <Button colorScheme='blue'>Button</Button>
-              <Button colorScheme='blue'>Button</Button>
-              <Button colorScheme='blue'>Button</Button>
+              <Button colorScheme="blue">Button</Button>
+              <Button colorScheme="blue">Button</Button>
+              <Button colorScheme="blue">Button</Button>
             </PopoverBody>
-            <PopoverFooter >
-              <Button style={{ float: 'right' }} colorScheme="orange">Checkout</Button>
+            <PopoverFooter>
+              <Button style={{ float: "right" }} colorScheme="orange">
+                Checkout
+              </Button>
             </PopoverFooter>
           </PopoverContent>
         </Portal>
       </Popover>
     </>
-  )
-}
+  );
+};
 
 export default ShoppingCartButton;
