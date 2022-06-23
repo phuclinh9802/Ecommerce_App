@@ -15,12 +15,17 @@ import {
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 import "./index.css";
-const ShoppingCartButton = (props) => {
+const ShoppingCartButton = ({ isLight }) => {
   return (
     <>
       <Popover>
         <PopoverTrigger>
-          <Button className="cart" colorScheme="white" variant="ghost">
+          <Button
+            variant="unstyled"
+            // className={isLight ? "cart-light" : "cart"}
+            // colorScheme="white"
+            // variant="ghost"
+          >
             <AddShoppingCartIcon />
           </Button>
         </PopoverTrigger>

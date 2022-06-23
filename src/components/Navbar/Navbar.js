@@ -10,6 +10,7 @@ import {
   PopoverContent,
   PopoverHeader,
   Portal,
+  useColorMode,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -40,8 +41,14 @@ import { CANCEL } from "../../constants/button";
 import "./Navbar.css";
 import ShoppingCartButton from "../ShoppingCartButton";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import NightlightIcon from "@mui/icons-material/Nightlight";
+import LightModeIcon from "@mui/icons-material/LightMode";
 
 const Navbar = (props) => {
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  const [isLight, setIsLight] = useState(true);
+  const [fade, setFade] = useState(false);
   const [searchText, setSearchText] = useState("");
   const auth = useSelector((state) => state.auth);
   const { user, isAuthenticated, me } = auth;
@@ -77,6 +84,11 @@ const Navbar = (props) => {
     onClose: onCloseLogOut,
   } = useDisclosure();
 
+  const handleLightMode = () => {
+    setIsLight(!isLight);
+    toggleColorMode();
+  };
+
   const handleLogOut = (e) => {
     e.preventDefault();
     onCloseLogOut();
@@ -87,7 +99,8 @@ const Navbar = (props) => {
   };
 
   return (
-    <Box w="100%" className="nav-bar">
+    // <Box w="100%" className={isLight ? "nav-bar-light" : "nav-bar"}>
+    <Box w="100%">
       <Flex
         w="100%"
         px="5"
@@ -96,9 +109,21 @@ const Navbar = (props) => {
         justify="space-between"
         display={{ base: "none", md: "flex" }}
       >
-        <Link to="/">
-          <Button variant="solid">{BRAND}</Button>
-        </Link>
+        <HStack spacing={4}>
+          <Link to="/">
+            <Button variant="unstyled">{BRAND}</Button>
+          </Link>
+
+          <Button
+            // onClick={() => handleLightMode()}
+            variant="unstyled"
+            onClick={handleLightMode}
+            onAnimationEnd={() => setFade(!isLight)}
+          >
+            {isLight ? <NightlightIcon /> : <LightModeIcon />}
+          </Button>
+        </HStack>
+
         <HStack as="nav">
           <SearchBar
             style={{ width: "1000px" }}
@@ -136,10 +161,8 @@ const Navbar = (props) => {
           </HStack>
         ) : (
           <HStack spacing={4}>
-            <ShoppingCartButton />
-            <span className="userName">
-              Welcome, {me.firstName + " " + me.lastName}
-            </span>
+            <ShoppingCartButton isLight={isLight} />
+            <span>Welcome, {me.firstName + " " + me.lastName}</span>
             <Button size="sm" colorScheme="red" onClick={onOpenLogOut}>
               <PowerSettingsNewIcon />
             </Button>

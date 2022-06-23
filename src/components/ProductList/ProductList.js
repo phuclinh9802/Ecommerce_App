@@ -33,20 +33,16 @@ const ProductList = ({ getProducts }) => {
   }, []);
 
   return (
-    <div className="product-list">
-      <div className={`sb ${toggled ? "toggled" : ""}`}>
+    <Grid templateColumns="repeat(8, 1fr)" gap={10}>
+      <GridItem colSpan={1}>
         <Sidebar
-          collapsed={collapsed}
-          toggled={toggled}
-          handleToggleSidebar={handleToggleSidebar}
+        //   collapsed={collapsed}
+        //   toggled={toggled}
+        //   handleToggleSidebar={handleToggleSidebar}
         />
-      </div>
-      <div className="product-grid">
-        <Grid
-          templateColumns="repeat(5, 1fr)"
-          gap={10}
-          className="product-grid"
-        >
+      </GridItem>
+      <GridItem colSpan={7}>
+        <Grid templateColumns="repeat(5, 1fr)" gap={10}>
           {products.map((product, i) => {
             return (
               <GridItem w="50%">
@@ -64,8 +60,8 @@ const ProductList = ({ getProducts }) => {
             );
           })}
         </Grid>
-      </div>
-    </div>
+      </GridItem>
+    </Grid>
   );
 };
 

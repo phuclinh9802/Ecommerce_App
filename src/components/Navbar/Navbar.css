@@ -2,8 +2,16 @@
   background-color: #2F2626;
 }
 
+.nav-bar-light {
+  background-color: #f2f2f2;
+}
+
 .userName {
   color: #f2f2f2;
+}
+
+.userName-light {
+  color: #2F2626;
 }
 
 .cart {
@@ -15,3 +23,4 @@
   color: #c2c2c2;
   background: none;
 }
+
