@@ -90,8 +90,8 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
     onClose();
     toast({
       position: "bottom-right",
-      title: "Welcome, " + me.firstName + " " + me.lastName,
-      description: "We're glad to have you here!",
+      title: "Hello, " + me.firstName + " " + me.lastName,
+      description: "Welcome to eComShop! ",
       status: "success",
       duration: 5000,
       isClosable: true,
