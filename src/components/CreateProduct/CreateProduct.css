@@ -1,0 +1,12 @@
+.create-product {
+  display: block;
+  text-align: center;
+  padding: 20px 200px;
+}
+
+form.create-product-form {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}

@@ -22,8 +22,8 @@
 
 .slider-dot {
   display: inline-block;
-  height: 20px;
-  width: 20px;
+  height: 10px;
+  width: 10px;
   border-radius: 50%;
   cursor: pointer;
   margin: 15px 7px 0;

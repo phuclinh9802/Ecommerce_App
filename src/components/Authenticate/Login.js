@@ -1,6 +1,5 @@
-import React, { Component, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { withRouter, Link, useHistory, useLocation } from "react-router-dom";
-import { isEmpty } from "is-empty";
 import {
   Modal,
   ModalOverlay,
@@ -12,7 +11,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import {
-  useDisclosure,
   Button,
   FormLabel,
   FormControl,
@@ -25,7 +23,6 @@ import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import {
-  ACCOUNT_FOUND_MESSAGE,
   ACCOUNT_NOT_FOUND_MESSAGE,
 } from "../../constants/messages";
 import { LOG_IN } from "../../constants/auth";

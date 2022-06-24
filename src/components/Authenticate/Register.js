@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { Component } from "react";
 import {
     Modal,
     ModalOverlay,
@@ -9,7 +9,6 @@ import {
     ModalCloseButton,
 } from "@chakra-ui/react";
 import {
-    useDisclosure,
     Button,
     FormLabel,
     FormControl,
@@ -18,8 +17,6 @@ import {
 } from "@chakra-ui/react";
 
 import { Link, withRouter } from "react-router-dom";
-import Login from "./Login";
-import { SIGN_UP } from "../../constants/auth";
 import { connect } from 'react-redux'
 import { registerUser } from "../../actions/authActions";
 import PropTypes from "prop-types";

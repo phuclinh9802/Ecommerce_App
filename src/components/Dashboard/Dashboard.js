@@ -1,19 +1,6 @@
 import ProductList from "../ProductList/ProductList";
-import { useHistory, withRouter } from "react-router-dom";
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  Stack,
-  VStack,
-  HStack,
-  Box,
-  CloseButton,
-  useDisclosure,
-  useToast,
-} from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
+
 import { useEffect, useRef, useState } from "react";
 import "./Dashboard.css";
 
@@ -23,15 +10,6 @@ const delay = 6000;
 const Dashboard = () => {
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
-  const history = useHistory();
-
-  //   useEffect(() => {
-  //     const token = localStorage.getItem("jwtToken");
-  //     console.log(JSON.stringify(token));
-  //     if (token) {
-  //       history.push("/dashboard");
-  //     }
-  //   }, []);
 
   const resetTimeout = () => {
     if (timeoutRef.current) {

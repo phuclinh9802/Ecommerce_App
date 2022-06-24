@@ -1,23 +1,21 @@
 import Rating from "react-rating";
-import { BUY_BUTTON, ADD_TO_CART } from "../../constants/button";
 
 import {
   Box,
   Image,
   Text,
   Stack,
-  Button,
-  Flex,
-  Spacer,
 } from "@chakra-ui/react";
 import { StarBorder, Star, FavoriteBorder, Favorite } from "@material-ui/icons";
-import { Link, useHistory, Route, Switch } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector, connect } from "react-redux";
 import { currentProduct } from "../../actions/productActions";
 import PropTypes from "prop-types";
 
+import './ProductCard.css';
+
 const ProductCard = (props) => {
-  const { id, image, productName, price, description, rating } = props;
+  const { id, image, productName, price, rating } = props;
   const products = useSelector((state) => state.products);
   const { product } = products;
   const history = useHistory();
@@ -38,7 +36,9 @@ const ProductCard = (props) => {
       <Box p={2}>
         <Stack align="start">
           <Text as="h1" fontSize="2xl" fontWeight="" my={2}>
-            {productName}
+            <Link to={`/product/${id}`} className="link-pname">
+              {productName}
+            </Link>
             <Rating
               style={{ marginLeft: "25px" }}
               start={0}

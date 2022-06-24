@@ -1,52 +1,40 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import React from "react";
 import {
   Button,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverCloseButton,
-  PopoverArrow,
-  PopoverBody,
-  PopoverFooter,
-  Portal,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerBody,
+  DrawerHeader,
+  DrawerCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 import "./index.css";
 const ShoppingCartButton = ({ isLight }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Popover>
-        <PopoverTrigger>
-          <Button
-            variant="unstyled"
-            // className={isLight ? "cart-light" : "cart"}
-            // colorScheme="white"
-            // variant="ghost"
-          >
-            <AddShoppingCartIcon />
-          </Button>
-        </PopoverTrigger>
-        <Portal>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverHeader>Here's what you chose</PopoverHeader>
-            <PopoverCloseButton />
-            <PopoverBody>
-              <Button colorScheme="blue">Button</Button>
-              <Button colorScheme="blue">Button</Button>
-              <Button colorScheme="blue">Button</Button>
-            </PopoverBody>
-            <PopoverFooter>
-              <Button style={{ float: "right" }} colorScheme="orange">
-                Checkout
-              </Button>
-            </PopoverFooter>
-          </PopoverContent>
-        </Portal>
-      </Popover>
+      <Button
+        variant="unstyled"
+        onClick={onOpen}
+      >
+        <AddShoppingCartIcon />
+      </Button>
+      <Drawer placement="right" size={'md'} onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader borderBottomWidth='1px'>Shopping Cart</DrawerHeader>
+          <DrawerBody>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 };

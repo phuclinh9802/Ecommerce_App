@@ -1,15 +1,11 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
   Button,
   HStack,
+  Text,
   useDisclosure,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  Portal,
   useColorMode,
 } from "@chakra-ui/react";
 import {
@@ -25,8 +21,6 @@ import { data } from "../../data/data";
 // import { Link } from 'react-scroll';
 import SearchBar from "material-ui-search-bar";
 import { useSelector, useDispatch } from "react-redux";
-import { toggling } from "../../reducers/toggleSlice";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Link, withRouter } from "react-router-dom";
 import Login from "../Authenticate/Login";
 import Register from "../Authenticate/Register";
@@ -34,7 +28,7 @@ import { connect } from "react-redux";
 import { currentUser, logOutUser } from "../../actions/authActions";
 import PropTypes from "prop-types";
 
-import { SIGN_IN, SIGN_UP, LOG_OUT, USER } from "../../constants/auth";
+import { SIGN_IN, SIGN_UP, LOG_OUT } from "../../constants/auth";
 import { BRAND, CONFIRM_MESSAGE } from "../../constants/messages";
 import { CANCEL } from "../../constants/button";
 
@@ -45,10 +39,9 @@ import NightlightIcon from "@mui/icons-material/Nightlight";
 import LightModeIcon from "@mui/icons-material/LightMode";
 
 const Navbar = (props) => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { toggleColorMode } = useColorMode();
 
   const [isLight, setIsLight] = useState(true);
-  const [fade, setFade] = useState(false);
   const [searchText, setSearchText] = useState("");
   const auth = useSelector((state) => state.auth);
   const { user, isAuthenticated, me } = auth;
@@ -119,7 +112,6 @@ const Navbar = (props) => {
             // onClick={() => handleLightMode()}
             variant="unstyled"
             onClick={handleLightMode}
-            onAnimationEnd={() => setFade(!isLight)}
           >
             {isLight ? <NightlightIcon /> : <LightModeIcon />}
           </Button>
@@ -127,17 +119,17 @@ const Navbar = (props) => {
 
         <HStack as="nav">
           <SearchBar
-            style={{ width: "1000px" }}
+            className="search-bar"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            onRequestSearch={() => {}}
+            onRequestSearch={() => { }}
           />
         </HStack>
         {!isAuthenticated ? (
           <HStack>
             <Link to="/register">
-              <Button colorScheme="teal" onClick={onOpenRegisterModal}>
-                {SIGN_UP}
+              <Button variant="link" colorScheme={!isLight ? "white" : "black"} onClick={onOpenRegisterModal}>
+                <Text>{SIGN_UP}</Text>
               </Button>
             </Link>
             <Register
@@ -145,12 +137,14 @@ const Navbar = (props) => {
               isOpen={isOpenRegisterModal}
               onClose={onCloseRegisterModal}
             />
+
+            <span>/</span>
             {/* <Button colorScheme='red' onClick={() => dispatch(toggling(true))}>
                                     {SIGN_IN}
                                 </Button> */}
             <Link to="/login">
-              <Button colorScheme="red" onClick={onOpen}>
-                {SIGN_IN}
+              <Button variant="link" colorScheme={!isLight ? "white" : "black"} onClick={onOpen}>
+                <Text>{SIGN_IN}</Text>
               </Button>
             </Link>
             <Login

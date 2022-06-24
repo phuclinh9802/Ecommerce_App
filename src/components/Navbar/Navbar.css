@@ -24,3 +24,12 @@
   background: none;
 }
 
+.search-bar {
+  width: 1000px;
+}
+
+@media screen and (max-width: 1500px) {
+  .search-bar {
+    width: 700px;
+  }
+}

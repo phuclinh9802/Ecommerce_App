@@ -4,3 +4,9 @@
   width: calc(100% - 220px);
   margin-left: 220px;
 }
+
+@media screen and (max-width: 1500px) {
+  .grid-card {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

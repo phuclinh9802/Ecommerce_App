@@ -7,6 +7,16 @@ const config = {
 };
 
 // 3. extend the theme
-const theme = extendTheme({ config });
+const theme = extendTheme({
+  config,
+  colors: {
+    black: {
+      500: "#222",
+    },
+    white: {
+      500: "#f2f2f2"
+    }
+  }
+});
 
 export default theme;
