@@ -20,28 +20,31 @@ export const registerUser = (userData, history) => (dispatch) => {
 };
 
 // google
-export const googleUser = () => dispatch => {
-  console.log('google')
-  axios.get("/auth/login/success").then((res) => {
-    console.log(res.data);
-    const { token } = res.data;
-    localStorage.setItem("jwtToken", token);
-    // set token to auth header
-    setAuthToken(token);
-    // Decode token to get user data
-    const decoded = jwt_decode(token);
-    console.log(decoded);
-    // set current user
-    dispatch(setCurrentUser(decoded));
-    console.log(JSON.stringify(res.data));
-  }).catch((err) => {
-    console.log(err.response.data);
-    return dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data,
+export const googleUser = () => async (dispatch) => {
+  console.log("google");
+  await axios
+    .get("/auth/login/success")
+    .then((res) => {
+      console.log(res.data);
+      const { token } = res.data;
+      localStorage.setItem("jwtToken", token);
+      // set token to auth header
+      setAuthToken(token);
+      // Decode token to get user data
+      const decoded = jwt_decode(token);
+      console.log(decoded);
+      // set current user
+      dispatch(setCurrentUser(decoded));
+      console.log(JSON.stringify(res.data));
+    })
+    .catch((err) => {
+      console.log(err.response.data);
+      return dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
     });
-  });
-}
+};
 
 // login
 export const loginUser = (userData) => (dispatch) => {

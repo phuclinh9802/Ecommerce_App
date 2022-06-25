@@ -22,9 +22,7 @@ import { useSelector, connect } from "react-redux";
 import { loginUser, googleUser } from "../../actions/authActions";
 import classnames from "classnames";
 import PropTypes from "prop-types";
-import {
-  ACCOUNT_NOT_FOUND_MESSAGE,
-} from "../../constants/messages";
+import { ACCOUNT_NOT_FOUND_MESSAGE } from "../../constants/messages";
 import { LOG_IN } from "../../constants/auth";
 
 const Login = ({ isOpen, onClose, onOpen, loginUser, googleUser }) => {
@@ -45,14 +43,12 @@ const Login = ({ isOpen, onClose, onOpen, loginUser, googleUser }) => {
 
   useEffect(() => {
     if (isAuthenticated && location.pathname !== "/login") {
-      console.log('different')
+      console.log("different");
       history.push(location.pathname);
-    }
-    else if (isAuthenticated) {
-      console.log('different here')
-      history.push('/dashboard');
-    }
-    else if (Object.keys(errors).length > 0) {
+    } else if (isAuthenticated) {
+      console.log("different here");
+      history.push("/dashboard");
+    } else if (Object.keys(errors).length > 0) {
       toast({
         position: "bottom-right",
         title: "Please check your username/password",
@@ -65,18 +61,21 @@ const Login = ({ isOpen, onClose, onOpen, loginUser, googleUser }) => {
   }, [isAuthenticated]);
 
   const handleGoogle = () => {
-    const newWindow = window.open('http://localhost:5000/auth/google', '_blank', 'width=500,height=600');
+    const newWindow = window.open(
+      "http://localhost:5000/auth/google",
+      "_blank",
+      "width=500,height=600"
+    );
 
     if (newWindow) {
       let timer = setInterval(() => {
         if (newWindow.closed) {
           if (timer) clearInterval(timer);
           console.log("Yay we're authenticated");
-
+          googleUser();
+          history.push("/dashboard");
         }
       }, 5000);
-      googleUser();
-      history.push('/dashboard');
     }
 
     // toast({
@@ -87,7 +86,7 @@ const Login = ({ isOpen, onClose, onOpen, loginUser, googleUser }) => {
     //   duration: 5000,
     //   isClosable: true,
     // });
-  }
+  };
 
   const handleChange = (e) => {
     setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
@@ -137,7 +136,9 @@ const Login = ({ isOpen, onClose, onOpen, loginUser, googleUser }) => {
           <ModalHeader>Login</ModalHeader>
           <ModalBody pb={6}>
             <ModalCloseButton />
-            <Button colorScheme="red" onClick={handleGoogle}>Google</Button>
+            <Button colorScheme="red" onClick={handleGoogle}>
+              Google
+            </Button>
             <form id="login-form" noValidate onSubmit={handleSubmit}>
               <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
@@ -223,4 +224,6 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { loginUser, googleUser })(withRouter(Login));
+export default connect(mapStateToProps, { loginUser, googleUser })(
+  withRouter(Login)
+);
