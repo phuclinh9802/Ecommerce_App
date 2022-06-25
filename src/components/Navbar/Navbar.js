@@ -17,8 +17,6 @@ import {
   ModalFooter,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import { data } from "../../data/data";
-// import { Link } from 'react-scroll';
 import SearchBar from "material-ui-search-bar";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
@@ -46,10 +44,9 @@ const Navbar = (props) => {
   const auth = useSelector((state) => state.auth);
   const { user, isAuthenticated, me } = auth;
   const errors = useSelector((state) => state.errors);
-  const dispatch = useDispatch();
-  console.log("Navbar: " + user.firstName);
-  console.log("Navbar: " + isAuthenticated);
-  console.log("Navbar: " + JSON.stringify(me));
+
+  console.log('Navbar: ' + user.firstName)
+  console.log('Navbar: ' + isAuthenticated);
 
   // login modal
   const { onOpen, isOpen, onClose } = useDisclosure();
@@ -59,9 +56,6 @@ const Navbar = (props) => {
   useEffect(() => {
     props.currentUser();
   }, [token]);
-
-  // toast for notification
-  // const toast = useToast()
 
   // register modal
   const {
@@ -85,14 +79,13 @@ const Navbar = (props) => {
   const handleLogOut = (e) => {
     e.preventDefault();
     onCloseLogOut();
+    props.logOutUser();
     for (var e in errors) {
       delete errors[e];
     }
-    props.logOutUser();
   };
 
   return (
-    // <Box w="100%" className={isLight ? "nav-bar-light" : "nav-bar"}>
     <Box w="100%">
       <Flex
         w="100%"
@@ -109,7 +102,6 @@ const Navbar = (props) => {
 
           <Button
             pt={1}
-            // onClick={() => handleLightMode()}
             variant="unstyled"
             onClick={handleLightMode}
           >
@@ -139,9 +131,7 @@ const Navbar = (props) => {
             />
 
             <span>/</span>
-            {/* <Button colorScheme='red' onClick={() => dispatch(toggling(true))}>
-                                    {SIGN_IN}
-                                </Button> */}
+
             <Link to="/login">
               <Button variant="link" colorScheme={!isLight ? "white" : "black"} onClick={onOpen}>
                 <Text>{SIGN_IN}</Text>
@@ -184,16 +174,6 @@ const Navbar = (props) => {
     </Box>
   );
 };
-
-// const Logo = (props) => {
-//     return (
-//         <Box {...props}>
-//             <Text fontSize="lg" fontWeight="bold">
-//                 eComShop
-//             </Text>
-//         </Box>
-//     );
-// };
 
 Navbar.propTypes = {
   logOutUser: PropTypes.func.isRequired,

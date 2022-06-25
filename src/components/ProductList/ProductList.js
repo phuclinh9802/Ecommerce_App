@@ -28,8 +28,8 @@ const ProductList = ({ getProducts }) => {
         <Grid className="grid-card" templateColumns="repeat(5, 1fr)" gap={10} p={5}>
           {products.map((product, i) => {
             return (
-              <GridItem w="50%">
-                <Box key={product.id}>
+              <GridItem key={product.id} w="50%">
+                <Box>
                   <ProductCard
                     id={product.id}
                     image={product.image}

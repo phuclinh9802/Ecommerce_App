@@ -45,13 +45,13 @@ const ProductCard = (props) => {
               stop={1}
               initialRating={product.rating}
               emptySymbol={<FavoriteBorder />}
-              fullSymbol={<Favorite color="warning" />}
+              fullSymbol={<Favorite style={{ color: '#F08080' }} />}
             />
           </Text>
           <Rating
             initialRating={product.rating}
             emptySymbol={<StarBorder />}
-            fullSymbol={<Star color="warning" />}
+            fullSymbol={<Star style={{ color: '#FFD700' }} />}
           />
           <Text fontSize="2xl" fontWeight="bold">
             ${price}

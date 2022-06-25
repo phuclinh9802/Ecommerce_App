@@ -33,14 +33,13 @@ const CreateProduct = ({ createProduct }) => {
     }
 
     createProduct(newProduct);
-    console.log("products: " + JSON.stringify(products))
-    // setProduct({
-    //   name: '',
-    //   image: '',
-    //   description: '',
-    //   price: 0.0,
-    //   quantity: 0
-    // })
+    setProduct({
+      name: '',
+      image: '',
+      description: '',
+      price: 0.0,
+      quantity: 0
+    })
 
   }
 

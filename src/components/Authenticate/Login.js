@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 
 import { useSelector, connect } from "react-redux";
-import { loginUser } from "../../actions/authActions";
+import { loginUser, googleUser } from "../../actions/authActions";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import {
@@ -27,7 +27,7 @@ import {
 } from "../../constants/messages";
 import { LOG_IN } from "../../constants/auth";
 
-const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
+const Login = ({ isOpen, onClose, onOpen, loginUser, googleUser }) => {
   const [userLogin, setUserLogin] = useState({
     email: "",
     password: "",
@@ -41,25 +41,18 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
 
   const history = useHistory();
   const location = useLocation();
-  // const { isOpen, onClose, onOpen, onNotification } = props;
   const errors = useSelector((state) => state.errors);
-  // console.log("Login: " + isAuthenticated)
-  // console.log("Login " + JSON.stringify(user));
-  // useEffect(() => {
-  //     // console.log("inside useeffect " + isAuthenticated)
-  //     history.push('/dashboard')
-  // }, [isAuthenticated])
 
-  // console.log(JSON.stringify(errors))
-  // console.log(errors.email)
-  // console.log(errors.password)
-
-  console.log("isAuthenticated: " + isAuthenticated);
-  console.log(location.pathname);
   useEffect(() => {
     if (isAuthenticated && location.pathname !== "/login") {
+      console.log('different')
       history.push(location.pathname);
-    } else if (Object.keys(errors).length > 0) {
+    }
+    else if (isAuthenticated) {
+      console.log('different here')
+      history.push('/dashboard');
+    }
+    else if (Object.keys(errors).length > 0) {
       toast({
         position: "bottom-right",
         title: "Please check your username/password",
@@ -70,6 +63,31 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
       });
     }
   }, [isAuthenticated]);
+
+  const handleGoogle = () => {
+    const newWindow = window.open('http://localhost:5000/auth/google', '_blank', 'width=500,height=600');
+
+    if (newWindow) {
+      let timer = setInterval(() => {
+        if (newWindow.closed) {
+          if (timer) clearInterval(timer);
+          console.log("Yay we're authenticated");
+
+        }
+      }, 5000);
+      googleUser();
+      history.push('/dashboard');
+    }
+
+    // toast({
+    //   position: "bottom-right",
+    //   title: "Hello, " + me.firstName + " " + me.lastName,
+    //   description: "Welcome to eComShop! ",
+    //   status: "success",
+    //   duration: 5000,
+    //   isClosable: true,
+    // });
+  }
 
   const handleChange = (e) => {
     setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
@@ -93,7 +111,6 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
       duration: 5000,
       isClosable: true,
     });
-    console.log(userInfo);
   };
 
   let err = [];
@@ -120,6 +137,7 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
           <ModalHeader>Login</ModalHeader>
           <ModalBody pb={6}>
             <ModalCloseButton />
+            <Button colorScheme="red" onClick={handleGoogle}>Google</Button>
             <form id="login-form" noValidate onSubmit={handleSubmit}>
               <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
@@ -175,7 +193,7 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
             </Link>
             <Button
               type="submit"
-              variantColor="teal"
+              colorScheme="teal"
               variant="outline"
               width="-webkit-fit-content"
               mr={3}
@@ -193,6 +211,7 @@ const Login = ({ isOpen, onClose, onOpen, loginUser }) => {
 
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
+  googleUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   // isAuthenticated: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
@@ -204,4 +223,4 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { loginUser })(withRouter(Login));
+export default connect(mapStateToProps, { loginUser, googleUser })(withRouter(Login));

@@ -130,7 +130,7 @@ class Register extends Component {
                             </Link>
                             <Button
                                 type="submit"
-                                variantColor="teal"
+                                colorScheme="teal"
                                 variant="outline"
                                 width="-webkit-fit-content"
                                 mr={3}

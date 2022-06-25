@@ -14,19 +14,13 @@ import Logout from "./components/Authenticate/Logout";
 import { Center, ChakraProvider, Spinner } from "@chakra-ui/react";
 
 import { useSelector } from "react-redux";
-// import ProductDetails from "./components/ProductDetails/ProductDetails";
 import products from "./data/product";
 import CreateProduct from './components/CreateProduct/CreateProduct';
+import { LoginSuccess } from './components/Authenticate/LoginSuccess';
 const ProductDetails = lazy(() => import('./components/ProductDetails/ProductDetails'));
 const Dashboard = lazy(() => import('./components/Dashboard/Dashboard'))
 
 function App() {
-  const auth = useSelector((state) => state.auth);
-  const { isAuthenticated } = auth;
-  // const location = useLocation();
-
-  console.log("APP: " + isAuthenticated);
-
   return (
     <div className="App">
       <ChakraProvider>
@@ -55,6 +49,9 @@ function App() {
 
               <Route exact path={["/", "/dashboard"]}>
                 <Dashboard />
+              </Route>
+              <Route exact path="/login/success">
+                <LoginSuccess />
               </Route>
 
               <Route

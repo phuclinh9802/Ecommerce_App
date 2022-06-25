@@ -9,6 +9,7 @@ import {
   SET_CURRENT_USER,
   USER_LOADING,
 } from "./types";
+import { useHistory } from "react-router-dom";
 
 // register
 export const registerUser = (userData, history) => (dispatch) => {
@@ -18,8 +19,33 @@ export const registerUser = (userData, history) => (dispatch) => {
     .catch((err) => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 };
 
+// google
+export const googleUser = () => dispatch => {
+  console.log('google')
+  axios.get("/auth/login/success").then((res) => {
+    console.log(res.data);
+    const { token } = res.data;
+    localStorage.setItem("jwtToken", token);
+    // set token to auth header
+    setAuthToken(token);
+    // Decode token to get user data
+    const decoded = jwt_decode(token);
+    console.log(decoded);
+    // set current user
+    dispatch(setCurrentUser(decoded));
+    console.log(JSON.stringify(res.data));
+  }).catch((err) => {
+    console.log(err.response.data);
+    return dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    });
+  });
+}
+
 // login
 export const loginUser = (userData) => (dispatch) => {
+  // const history = useHistory();
   axios
     .post("/api/users/login", userData)
     .then((res) => {
@@ -33,6 +59,7 @@ export const loginUser = (userData) => (dispatch) => {
       const decoded = jwt_decode(token);
       // set current user
       dispatch(setCurrentUser(decoded));
+      // history.push("/dashboard");
     })
     .catch((err) => {
       console.log(err.response.data);
@@ -45,8 +72,7 @@ export const loginUser = (userData) => (dispatch) => {
 
 // get user
 export const currentUser = () => (dispatch) => {
-  const token = String(localStorage.getItem("jwtToken"));
-  console.log(token);
+  const token = localStorage.getItem("jwtToken");
   axios
     .get("/api/users/me", { headers: { Authorization: token } })
     .then((res) => {
@@ -94,8 +120,8 @@ export const logOutUser = () => (dispatch) => {
   localStorage.removeItem("jwtToken");
   // remove auth header for future requests
   setAuthToken(false);
-  // set current user to empty {} -> isAuthenticated = false
   dispatch(setCurrentUser({}));
+  // set current user to empty {} -> isAuthenticated = false
   return {
     type: LOG_OUT_USER,
   };

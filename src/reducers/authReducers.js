@@ -7,6 +7,7 @@ import {
 const isEmpty = require("is-empty");
 
 const token = localStorage.getItem("jwtToken");
+console.log(token + " reducer")
 const initialState = {
   isAuthenticated: false,
   user: {},
@@ -27,6 +28,7 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: !isEmpty(token),
         me: action.payload,
+        user: action.payload
       };
     case USER_LOADING:
       return {
@@ -35,9 +37,7 @@ export default function (state = initialState, action) {
       };
     case LOG_OUT_USER:
       return {
-        ...state,
-        isAuthenticated: isEmpty(action.payload),
-        user: {},
+        ...initialState
       };
     default:
       return state;

@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 import "./ProductDetails.css";
-import { ADD_TO_CART } from "../../constants/button";
+import { ADD_TO_CART, BUY_NOW_BUTTON } from "../../constants/button";
 import { useSelector, connect } from "react-redux";
 import { currentProduct } from "../../actions/productActions";
 import PropTypes from "prop-types";
@@ -29,9 +29,7 @@ const ProductDetails = ({ currentProduct }) => {
     history.push(`/products/${params.id}`);
     currentProduct(String(params.id));
   }, []);
-  console.log(JSON.stringify(product));
 
-  console.log(params.id);
   return (
     <Grid
       className="product-details"
@@ -49,20 +47,10 @@ const ProductDetails = ({ currentProduct }) => {
             <Rating
               initialRating={product.rating}
               emptySymbol={
-                // <img
-                //   style={{ width: "24px", height: "24px" }}
-                //   src="/img/star-16.png"
-                // />
                 <StarBorder />
               }
               fullSymbol={
-                // <img
-                //   style={{ width: "24px", height: "24px" }}
-                //   src="/img/icons8-star-filled-16.png"
-                //   className="icon"
-                //   fractions={2}
-                // />
-                <Star color="warning" />
+                <Star />
               }
             />
           </span>
@@ -78,7 +66,7 @@ const ProductDetails = ({ currentProduct }) => {
         <Grid gridTemplateColumns={"1fr"} ml={5} gap={4}>
           <GridItem>
             <Button width="200px" colorScheme="green">
-              Buy Now
+              {BUY_NOW_BUTTON}
             </Button>
           </GridItem>
           <GridItem>
