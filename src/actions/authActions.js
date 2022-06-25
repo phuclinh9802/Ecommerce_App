@@ -23,7 +23,34 @@ export const registerUser = (userData, history) => (dispatch) => {
 export const googleUser = () => async (dispatch) => {
   console.log("google");
   await axios
-    .get("/auth/login/success")
+    .get("/auth/google/success")
+    .then((res) => {
+      console.log(res.data);
+      const { token } = res.data;
+      localStorage.setItem("jwtToken", token);
+      // set token to auth header
+      setAuthToken(token);
+      // Decode token to get user data
+      const decoded = jwt_decode(token);
+      console.log(decoded);
+      // set current user
+      dispatch(setCurrentUser(decoded));
+      console.log(JSON.stringify(res.data));
+    })
+    .catch((err) => {
+      console.log(err.response.data);
+      return dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
+// github
+export const githubUser = () => async (dispatch) => {
+  console.log("github");
+  await axios
+    .get("/auth/github/success")
     .then((res) => {
       console.log(res.data);
       const { token } = res.data;

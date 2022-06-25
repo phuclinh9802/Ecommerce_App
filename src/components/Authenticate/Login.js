@@ -9,6 +9,8 @@ import {
   ModalFooter,
   ModalCloseButton,
   useToast,
+  Center,
+  Text,
 } from "@chakra-ui/react";
 import {
   Button,
@@ -19,16 +21,27 @@ import {
 } from "@chakra-ui/react";
 
 import { useSelector, connect } from "react-redux";
-import { loginUser, googleUser } from "../../actions/authActions";
+import { loginUser, googleUser, githubUser } from "../../actions/authActions";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { ACCOUNT_NOT_FOUND_MESSAGE } from "../../constants/messages";
 import { LOG_IN } from "../../constants/auth";
+import { v4 as uuidv4 } from "uuid";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
-const Login = ({ isOpen, onClose, onOpen, loginUser, googleUser }) => {
+const Login = ({
+  isOpen,
+  onClose,
+  onOpen,
+  loginUser,
+  googleUser,
+  githubUser,
+}) => {
   const [userLogin, setUserLogin] = useState({
     email: "",
     password: "",
+    googleId: "",
     errors: {},
   });
   const initialRef = useRef();
@@ -88,6 +101,25 @@ const Login = ({ isOpen, onClose, onOpen, loginUser, googleUser }) => {
     // });
   };
 
+  const handleGithub = () => {
+    const newWindow = window.open(
+      "http://localhost:5000/auth/github/",
+      "_blank",
+      "width=500,height=600"
+    );
+
+    if (newWindow) {
+      let timer = setInterval(() => {
+        if (newWindow.closed) {
+          if (timer) clearInterval(timer);
+          console.log("Yay we're authenticated");
+          githubUser();
+          history.push("/dashboard");
+        }
+      }, 5000);
+    }
+  };
+
   const handleChange = (e) => {
     setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
   };
@@ -136,9 +168,32 @@ const Login = ({ isOpen, onClose, onOpen, loginUser, googleUser }) => {
           <ModalHeader>Login</ModalHeader>
           <ModalBody pb={6}>
             <ModalCloseButton />
-            <Button colorScheme="red" onClick={handleGoogle}>
-              Google
-            </Button>
+            <Center flexDirection={"column"} gap={2}>
+              <Button
+                onClick={handleGoogle}
+                w={"sm"}
+                variant={"outline"}
+                leftIcon={<FcGoogle />}
+              >
+                <Center>
+                  <Text>Google</Text>
+                </Center>
+              </Button>
+              <Button
+                onClick={handleGithub}
+                w={"sm"}
+                color="white"
+                style={{ backgroundColor: "#222" }}
+                leftIcon={<FaGithub />}
+              >
+                <Center>
+                  <Text>Github</Text>
+                </Center>
+              </Button>
+            </Center>
+            <Center p={5}>
+              <Text>------ or ------</Text>
+            </Center>
             <form id="login-form" noValidate onSubmit={handleSubmit}>
               <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
@@ -213,6 +268,7 @@ const Login = ({ isOpen, onClose, onOpen, loginUser, googleUser }) => {
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   googleUser: PropTypes.func.isRequired,
+  githubUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   // isAuthenticated: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
@@ -224,6 +280,6 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { loginUser, googleUser })(
+export default connect(mapStateToProps, { loginUser, googleUser, githubUser })(
   withRouter(Login)
 );
