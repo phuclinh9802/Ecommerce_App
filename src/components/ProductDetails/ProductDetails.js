@@ -9,6 +9,7 @@ import {
   Button,
   Wrap,
   WrapItem,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import "./ProductDetails.css";
@@ -17,13 +18,28 @@ import { useSelector, connect } from "react-redux";
 import { currentProduct } from "../../actions/productActions";
 import PropTypes from "prop-types";
 import { StarBorder, Star, AttachMoney } from "@material-ui/icons";
+import CartDrawer from "../CartDrawer/CartDrawer";
+import { postCart } from '../../actions/cartActions';
 
-const ProductDetails = ({ currentProduct }) => {
+const ProductDetails = ({ currentProduct, postCart }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const products = useSelector((state) => state.products);
+  const cart = useSelector((state) => state.cart);
+  const { items } = cart;
   const { product } = products;
   const history = useHistory();
 
   const params = useParams();
+
+  const handleClick = () => {
+    const data = {
+      name: product.name,
+      image: product.image,
+    }
+    postCart(data);
+    onOpen();
+  }
 
   useEffect(() => {
     history.push(`/products/${params.id}`);
@@ -70,9 +86,10 @@ const ProductDetails = ({ currentProduct }) => {
             </Button>
           </GridItem>
           <GridItem>
-            <Button width="200px" variant="outline" borderColor="gray">
+            <Button width="200px" variant="outline" borderColor="gray" onClick={handleClick}>
               {ADD_TO_CART}
             </Button>
+            <CartDrawer isOpen={isOpen} onClose={onClose} data={items} />
           </GridItem>
         </Grid>
       </GridItem>
@@ -82,12 +99,14 @@ const ProductDetails = ({ currentProduct }) => {
 
 ProductDetails.propTypes = {
   currentProduct: PropTypes.func.isRequired,
+  postCart: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   products: state.products,
+  cart: state.cart,
 });
 
-export default connect(mapStateToProps, { currentProduct })(
+export default connect(mapStateToProps, { currentProduct, postCart })(
   withRouter(ProductDetails)
 );

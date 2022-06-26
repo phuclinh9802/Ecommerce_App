@@ -13,6 +13,7 @@ import {
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 import "./index.css";
+import CartDrawer from "../CartDrawer/CartDrawer";
 const ShoppingCartButton = ({ isLight }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -23,18 +24,7 @@ const ShoppingCartButton = ({ isLight }) => {
       >
         <AddShoppingCartIcon />
       </Button>
-      <Drawer placement="right" size={'md'} onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth='1px'>Shopping Cart</DrawerHeader>
-          <DrawerBody>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
+      <CartDrawer isOpen={isOpen} onClose={onClose} />
     </>
   );
 };
