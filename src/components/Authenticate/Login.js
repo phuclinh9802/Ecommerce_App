@@ -61,16 +61,17 @@ const Login = ({
     } else if (isAuthenticated) {
       console.log("different here");
       history.push("/dashboard");
-    } else if (Object.keys(errors).length > 0) {
-      toast({
-        position: "bottom-right",
-        title: "Please check your username/password",
-        description: JSON.stringify(errors),
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
     }
+    // else if (Object.keys(errors).length > 0) {
+    //   toast({
+    //     position: "bottom-right",
+    //     title: "Please check your username/password",
+    //     description: JSON.stringify(errors),
+    //     status: "error",
+    //     duration: 5000,
+    //     isClosable: true,
+    //   });
+    // }
   }, [isAuthenticated]);
 
   const handleGoogle = () => {
