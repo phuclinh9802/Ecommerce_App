@@ -54,24 +54,25 @@ const Navbar = (props) => {
   const { onOpen, isOpen, onClose } = useDisclosure();
 
   const token = localStorage.getItem("jwtToken");
+  // console.log("currentUser: " + currentUser);
   console.log("token: " + token);
   useEffect(() => {
     props.currentUser();
     if (token) {
+      console.log(me.firstName);
       let timer = setTimeout(() => {
         toast({
           position: "bottom-right",
-          title: "Hello, " + user.firstName + " " + user.lastName,
+          title: "Hello, " + me.firstName + " " + me.lastName,
           description: "Welcome to eComShop! ",
           status: "success",
-          duration: 5000,
+          duration: 4000,
           isClosable: true,
         });
-      }, 1000)
+      }, 2000)
       return () => clearTimeout(timer);
     }
-
-  }, [token]);
+  }, [token, me.firstName, me.lastName]);
 
   // register modal
   const {

@@ -12,8 +12,8 @@ import {
 import { useHistory } from "react-router-dom";
 
 // register
-export const registerUser = (userData, history) => (dispatch) => {
-  axios
+export const registerUser = (userData, history) => async (dispatch) => {
+  await axios
     .post("/api/users/register", userData)
     .then((res) => history.push("/")) //redirect to login
     .catch((err) => dispatch({ type: GET_ERRORS, payload: err.response.data }));
@@ -78,10 +78,10 @@ export const loginUser = (userData) => async (dispatch) => {
   // const history = useHistory();
   await axios
     .post("/api/users/login", userData)
-    .then((res) => {
+    .then(async (res) => {
       // save to localStorage
       // set token to localStorage
-      const { token } = res.data;
+      const { token } = await res.data;
       localStorage.setItem("jwtToken", token);
       // set token to auth header
       setAuthToken(token);
@@ -105,9 +105,9 @@ export const currentUser = () => async (dispatch) => {
   const token = localStorage.getItem("jwtToken");
   await axios
     .get("/api/users/me", { headers: { Authorization: token } })
-    .then((res) => {
-      // get token
-      const data = res.data;
+    .then(async (res) => {
+      // get data
+      const data = await res.data;
 
       if (token) {
         dispatch(getCurrentUser(data));

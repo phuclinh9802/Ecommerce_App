@@ -7,7 +7,6 @@ import {
 const isEmpty = require("is-empty");
 
 const token = localStorage.getItem("jwtToken");
-console.log(token + " reducer")
 const initialState = {
   isAuthenticated: false,
   user: {},
