@@ -5,6 +5,7 @@ import {
   Image,
   Text,
   Stack,
+  Center,
 } from "@chakra-ui/react";
 import { StarBorder, Star, FavoriteBorder, Favorite } from "@material-ui/icons";
 import { Link, useHistory } from "react-router-dom";
@@ -24,18 +25,21 @@ const ProductCard = (props) => {
   };
   return (
     <Box w="300px" rounded="20px" overflow="hidden" bg="" mt={10}>
-      <Link
-        to={{
-          pathname: `/products/${id}`,
-        }}
-        style={{ cursor: "pointer" }}
-      >
-        <Image src={image} alt={productName} boxSize="300"></Image>
-      </Link>
+      <Center>
+
+        <Link
+          to={{
+            pathname: `/products/${id}`,
+          }}
+          style={{ cursor: "pointer" }}
+        >
+          <Image src={image} alt={productName} boxSize="200"></Image>
+        </Link>
+      </Center>
 
       <Box p={2}>
-        <Stack align="start">
-          <Text as="h1" fontSize="2xl" fontWeight="" my={2}>
+        <Stack pl={5} align="start">
+          <Text as="h1" fontSize="xl" fontWeight="" my={2}>
             <Link to={`/product/${id}`} className="link-pname">
               {productName}
             </Link>

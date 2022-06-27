@@ -133,16 +133,10 @@ const Login = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     loginUser(userInfo);
+    console.log("me: " + JSON.stringify(me));
     history.push("/dashboard");
     onClose();
-    toast({
-      position: "bottom-right",
-      title: "Hello, " + me.firstName + " " + me.lastName,
-      description: "Welcome to eComShop! ",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-    });
+
   };
 
   let err = [];

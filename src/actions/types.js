@@ -7,3 +7,4 @@ export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT = "GET_PRODUCT";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const POST_CART = "POST_CART";
+export const UPDATE_ADDRESS = "UPDATE_ADDRESS";

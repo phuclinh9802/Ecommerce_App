@@ -7,6 +7,7 @@ import {
   Text,
   useDisclosure,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -44,6 +45,7 @@ const Navbar = (props) => {
   const auth = useSelector((state) => state.auth);
   const { user, isAuthenticated, me } = auth;
   const errors = useSelector((state) => state.errors);
+  const toast = useToast();
 
   console.log('Navbar: ' + user.firstName)
   console.log('Navbar: ' + isAuthenticated);
@@ -55,6 +57,20 @@ const Navbar = (props) => {
   console.log("token: " + token);
   useEffect(() => {
     props.currentUser();
+    if (token) {
+      let timer = setTimeout(() => {
+        toast({
+          position: "bottom-right",
+          title: "Hello, " + user.firstName + " " + user.lastName,
+          description: "Welcome to eComShop! ",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      }, 1000)
+      return () => clearTimeout(timer);
+    }
+
   }, [token]);
 
   // register modal

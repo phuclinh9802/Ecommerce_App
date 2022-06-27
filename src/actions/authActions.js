@@ -59,7 +59,7 @@ export const githubUser = () => async (dispatch) => {
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
-      console.log(decoded);
+      console.log("decoded: " + decoded);
       // set current user
       dispatch(setCurrentUser(decoded));
       console.log(JSON.stringify(res.data));
@@ -74,9 +74,9 @@ export const githubUser = () => async (dispatch) => {
 };
 
 // login
-export const loginUser = (userData) => (dispatch) => {
+export const loginUser = (userData) => async (dispatch) => {
   // const history = useHistory();
-  axios
+  await axios
     .post("/api/users/login", userData)
     .then((res) => {
       // save to localStorage
@@ -101,9 +101,9 @@ export const loginUser = (userData) => (dispatch) => {
 };
 
 // get user
-export const currentUser = () => (dispatch) => {
+export const currentUser = () => async (dispatch) => {
   const token = localStorage.getItem("jwtToken");
-  axios
+  await axios
     .get("/api/users/me", { headers: { Authorization: token } })
     .then((res) => {
       // get token

@@ -10,8 +10,8 @@ export const getProducts = () => (dispatch) => {
   });
 };
 
-export const currentProduct = (index) => (dispatch) => {
-  axios.get(`/api/product/${index}`).then((res) => {
+export const currentProduct = (index) => async (dispatch) => {
+  await axios.get(`/api/product/${index}`).then((res) => {
     const data = res.data;
     dispatch(getProduct(data));
   });

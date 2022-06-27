@@ -18,14 +18,13 @@ const ProductList = ({ getProducts }) => {
   }, []);
 
   return (
-    <Grid templateColumns="repeat(8, 1fr)" gap={10}>
+    <Grid templateColumns="repeat(8, 1fr)" gap={2}>
       <GridItem colSpan={1}>
         <Sidebar
-
         />
       </GridItem>
       <GridItem colSpan={7}>
-        <Grid className="grid-card" templateColumns="repeat(5, 1fr)" gap={10} p={5}>
+        <Grid className="grid-card" templateColumns="repeat(5, 1fr)" gap={5} p={5}>
           {products.map((product, i) => {
             return (
               <GridItem key={product.id} w="50%">

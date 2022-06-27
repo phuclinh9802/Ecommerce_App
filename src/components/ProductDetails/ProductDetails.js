@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams, withRouter, Route, useHistory } from "react-router-dom";
+import { useParams, withRouter, Route, useHistory, Link } from "react-router-dom";
 import Rating from "react-rating";
 import {
   Grid,
@@ -81,9 +81,11 @@ const ProductDetails = ({ currentProduct, postCart }) => {
       <GridItem>
         <Grid gridTemplateColumns={"1fr"} ml={5} gap={4}>
           <GridItem>
-            <Button width="200px" colorScheme="green">
-              {BUY_NOW_BUTTON}
-            </Button>
+            <Link to="/users/shipping">
+              <Button width="200px" colorScheme="green">
+                {BUY_NOW_BUTTON}
+              </Button>
+            </Link>
           </GridItem>
           <GridItem>
             <Button width="200px" variant="outline" borderColor="gray" onClick={handleClick}>
