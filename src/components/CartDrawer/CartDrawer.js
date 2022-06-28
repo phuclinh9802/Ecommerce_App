@@ -27,12 +27,9 @@ const CartDrawer = ({ onClose, isOpen, quantity, updatedPrice, deleteCart, updat
   let { items } = cart;
   let { qty, price } = products;
 
-  console.log('quantity: ' + quantity)
-  console.log('price: ' + price)
 
-  useEffect(() => {
-    updateQtyProduct(quantity, updatedPrice);
-  }, [updateQtyProduct, quantity])
+  // console.log('quantity: ' + quantity)
+  // console.log('price: ' + price)
 
   const handleDelete = (id) => {
     deleteCart(id)
@@ -48,6 +45,7 @@ const CartDrawer = ({ onClose, isOpen, quantity, updatedPrice, deleteCart, updat
         <DrawerBody>
           <Flex flexDirection={'column'} gap={5}>
             {items.map((el) => {
+              let totalPrice = Number(el.price) * Number(el.quantity);
               return (
                 <>
                   <Grid alignItems={'center'} justifyContent={'center'} gap={2} gridTemplateColumns={'150px 1fr 150px 150px'}>
@@ -63,13 +61,13 @@ const CartDrawer = ({ onClose, isOpen, quantity, updatedPrice, deleteCart, updat
                     <GridItem >
                       {/* <Center> */}
                       <Flex justifyContent={'flex-end'}>
-                        <Text fontSize="lg">${price}</Text>
+                        <Text fontSize="lg">${totalPrice}</Text>
                       </Flex>
                       {/* </Center> */}
                     </GridItem>
                     <GridItem>
                       <Flex flexDirection={'row'} justifyContent='end' gap={5} >
-                        <Text pt={1}>Qty: {qty}</Text>
+                        <Text pt={1}>Qty: {el.quantity}</Text>
                         <Button
                           colorScheme={'red'}
                           variantColor={'red'}

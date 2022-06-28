@@ -27,16 +27,21 @@ const ProductDetails = ({ currentProduct, postCart, updateQtyProduct }) => {
   const products = useSelector((state) => state.products);
   const cart = useSelector((state) => state.cart);
   const { items } = cart;
-  const { product, qty } = products;
+  const { product, qty, price } = products;
   const history = useHistory();
 
   const params = useParams();
 
+
+  useEffect(() => {
+    updateQtyProduct(product.id, select, Number(product.price) * Number(select));
+  }, [updateQtyProduct])
+
   const handleChange = (e) => {
     setSelect(e.target.value)
   }
-  console.log('select: ' + select)
-  console.log('qty: ' + qty);
+  console.log('qty: ' + select)
+  console.log('price: ', Number(product.price) * select);
 
   const handleClick = () => {
     const data = {
@@ -44,7 +49,7 @@ const ProductDetails = ({ currentProduct, postCart, updateQtyProduct }) => {
       name: product.name,
       image: product.image,
       price: product.price,
-      quantity: product.quantity,
+      quantity: select,
     }
     postCart(data);
     onOpen();
