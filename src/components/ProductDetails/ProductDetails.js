@@ -19,6 +19,7 @@ import PropTypes from "prop-types";
 import { StarBorder, Star, AttachMoney } from "@material-ui/icons";
 import CartDrawer from "../CartDrawer/CartDrawer";
 import { postCart } from '../../actions/cartActions';
+import { v4 as uuidv4 } from 'uuid'
 
 const ProductDetails = ({ currentProduct, postCart, updateQtyProduct }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -32,10 +33,9 @@ const ProductDetails = ({ currentProduct, postCart, updateQtyProduct }) => {
 
   const params = useParams();
 
+  let uniqueId = uuidv4();
+  console.log(uniqueId)
 
-  useEffect(() => {
-    updateQtyProduct(product.id, select, Number(product.price) * Number(select));
-  }, [updateQtyProduct])
 
   const handleChange = (e) => {
     setSelect(e.target.value)
@@ -45,6 +45,7 @@ const ProductDetails = ({ currentProduct, postCart, updateQtyProduct }) => {
 
   const handleClick = () => {
     const data = {
+      uniqueId: uniqueId,
       id: product.id,
       name: product.name,
       image: product.image,
@@ -52,8 +53,13 @@ const ProductDetails = ({ currentProduct, postCart, updateQtyProduct }) => {
       quantity: select,
     }
     postCart(data);
+    updateQtyProduct(uniqueId, select, Number(product.price) * Number(select));
     onOpen();
   }
+
+
+  // useEffect(() => {
+  // }, [updateQtyProduct])
 
   let selectQty = [];
   for (let i = 1; i <= product.quantity; i++) {

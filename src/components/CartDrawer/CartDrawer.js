@@ -12,20 +12,23 @@ import {
   Center,
   Divider,
   Text,
+  DrawerFooter,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { deleteCart } from "../../actions/cartActions";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useEffect } from "react";
-import { updateQtyProduct } from "../../actions/productActions";
+import { updateQtyProduct } from "../../actions/cartActions";
+import { Link } from "react-router-dom";
 
 
-const CartDrawer = ({ onClose, isOpen, quantity, updatedPrice, deleteCart, updateQtyProduct }) => {
+const CartDrawer = ({ onClose, isOpen, data, deleteCart, updateQtyProduct }) => {
   const cart = useSelector((state) => state.cart)
   const products = useSelector((state) => state.products);
   let { items } = cart;
   let { qty, price } = products;
+
 
 
   // console.log('quantity: ' + quantity)
@@ -74,7 +77,7 @@ const CartDrawer = ({ onClose, isOpen, quantity, updatedPrice, deleteCart, updat
                           variant="ghost"
                           size="sm"
                           borderRadius={50}
-                          onClick={() => handleDelete(el.id)}
+                          onClick={() => handleDelete(el.uniqueId)}
                         >X</Button>
                       </Flex>
                     </GridItem>
@@ -86,6 +89,11 @@ const CartDrawer = ({ onClose, isOpen, quantity, updatedPrice, deleteCart, updat
           </Flex>
 
         </DrawerBody>
+        <DrawerFooter borderTopWidth='1px'>
+          <Link to='/users/shipping'>
+            <Button colorScheme='green'>Submit</Button>
+          </Link>
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   )
