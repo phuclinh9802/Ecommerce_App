@@ -88,7 +88,7 @@ export const loginUser = (userData) => async (dispatch) => {
       // Decode token to get user data
       const decoded = jwt_decode(token);
       // set current user
-      dispatch(setCurrentUser(decoded));
+      dispatch(getCurrentUser(decoded));
       // history.push("/dashboard");
     })
     .catch((err) => {
