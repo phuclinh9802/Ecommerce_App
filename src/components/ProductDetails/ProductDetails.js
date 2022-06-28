@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useParams, withRouter, Route, useHistory, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, withRouter, useHistory, Link } from "react-router-dom";
 import Rating from "react-rating";
 import {
   Grid,
@@ -7,44 +7,58 @@ import {
   Text,
   Stack,
   Button,
-  Wrap,
-  WrapItem,
   useDisclosure,
+  Select,
 } from "@chakra-ui/react";
 
 import "./ProductDetails.css";
 import { ADD_TO_CART, BUY_NOW_BUTTON } from "../../constants/button";
 import { useSelector, connect } from "react-redux";
-import { currentProduct } from "../../actions/productActions";
+import { currentProduct, updateQtyProduct } from "../../actions/productActions";
 import PropTypes from "prop-types";
 import { StarBorder, Star, AttachMoney } from "@material-ui/icons";
 import CartDrawer from "../CartDrawer/CartDrawer";
 import { postCart } from '../../actions/cartActions';
 
-const ProductDetails = ({ currentProduct, postCart }) => {
+const ProductDetails = ({ currentProduct, postCart, updateQtyProduct }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [select, setSelect] = useState(1);
 
   const products = useSelector((state) => state.products);
   const cart = useSelector((state) => state.cart);
   const { items } = cart;
-  const { product } = products;
+  const { product, qty } = products;
   const history = useHistory();
 
   const params = useParams();
 
+  const handleChange = (e) => {
+    setSelect(e.target.value)
+  }
+  console.log('select: ' + select)
+  console.log('qty: ' + qty);
+
   const handleClick = () => {
     const data = {
+      id: product.id,
       name: product.name,
       image: product.image,
+      price: product.price,
+      quantity: product.quantity,
     }
     postCart(data);
     onOpen();
   }
 
+  let selectQty = [];
+  for (let i = 1; i <= product.quantity; i++) {
+    selectQty.push(i);
+  }
+
   useEffect(() => {
     history.push(`/products/${params.id}`);
     currentProduct(String(params.id));
-  }, []);
+  }, [currentProduct, history, params.id]);
 
   return (
     <Grid
@@ -81,6 +95,13 @@ const ProductDetails = ({ currentProduct, postCart }) => {
       <GridItem>
         <Grid gridTemplateColumns={"1fr"} ml={5} gap={4}>
           <GridItem>
+            <Select w="200px" size="sm" value={select} onChange={e => handleChange(e)}>
+              {selectQty.map((qty) => {
+                return <option value={qty}>{qty}</option>
+              })}
+            </Select>
+          </GridItem>
+          <GridItem>
             <Link to="/users/shipping">
               <Button width="200px" colorScheme="green">
                 {BUY_NOW_BUTTON}
@@ -91,7 +112,7 @@ const ProductDetails = ({ currentProduct, postCart }) => {
             <Button width="200px" variant="outline" borderColor="gray" onClick={handleClick}>
               {ADD_TO_CART}
             </Button>
-            <CartDrawer isOpen={isOpen} onClose={onClose} data={items} />
+            <CartDrawer isOpen={isOpen} onClose={onClose} data={items} quantity={select} updatedPrice={product.price} />
           </GridItem>
         </Grid>
       </GridItem>
@@ -102,6 +123,7 @@ const ProductDetails = ({ currentProduct, postCart }) => {
 ProductDetails.propTypes = {
   currentProduct: PropTypes.func.isRequired,
   postCart: PropTypes.func.isRequired,
+  updateQtyProduct: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -109,6 +131,6 @@ const mapStateToProps = (state) => ({
   cart: state.cart,
 });
 
-export default connect(mapStateToProps, { currentProduct, postCart })(
+export default connect(mapStateToProps, { currentProduct, postCart, updateQtyProduct })(
   withRouter(ProductDetails)
 );

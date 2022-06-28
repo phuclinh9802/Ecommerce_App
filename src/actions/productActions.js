@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_PRODUCTS, GET_PRODUCT, CREATE_PRODUCT } from "./types";
+import { GET_PRODUCTS, GET_PRODUCT, CREATE_PRODUCT, UPDATE_QUANTITY_PRODUCT } from "./types";
 
 const token = localStorage.getItem("jwtToken");
 export const getProducts = () => (dispatch) => {
@@ -20,6 +20,13 @@ export const currentProduct = (index) => async (dispatch) => {
 export const createProduct = (productData) => (dispatch) => {
   axios.post("/api/product", productData, { headers: { Authorization: token } }).then((res) => {
     dispatch(setProduct(productData))
+  })
+}
+
+export const updateQtyProduct = (qty, price) => dispatch => {
+  return dispatch({
+    type: UPDATE_QUANTITY_PRODUCT,
+    payload: { qty, price },
   })
 }
 

@@ -1,8 +1,10 @@
-import { GET_PRODUCTS, GET_PRODUCT, CREATE_PRODUCT } from "../actions/types";
+import { GET_PRODUCTS, GET_PRODUCT, CREATE_PRODUCT, UPDATE_QUANTITY_PRODUCT } from "../actions/types";
 
 const initialState = {
   products: [],
   product: {},
+  qty: 1,
+  price: 0.0,
 };
 
 export default function (state = initialState, action) {
@@ -21,6 +23,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         products: [...state.products, action.payload]
+      }
+    case UPDATE_QUANTITY_PRODUCT:
+      return {
+        ...state,
+        qty: action.payload.qty,
+        price: Number(action.payload.price) * Number(action.payload.qty),
       }
     default:
       return state;
