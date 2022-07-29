@@ -143,7 +143,7 @@ const Login = ({
           <ModalHeader>Login</ModalHeader>
           <ModalBody pb={6}>
             <ModalCloseButton />
-            <Center flexDirection={"column"} gap={2}>
+            {/* <Center flexDirection={"column"} gap={2}>
               <Button
                 onClick={handleGoogle}
                 w={"sm"}
@@ -168,7 +168,7 @@ const Login = ({
             </Center>
             <Center p={5}>
               <Text>------ or ------</Text>
-            </Center>
+            </Center> */}
             <form id="login-form" noValidate onSubmit={handleSubmit}>
               <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
