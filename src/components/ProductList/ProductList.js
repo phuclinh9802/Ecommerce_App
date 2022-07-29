@@ -24,24 +24,29 @@ const ProductList = () => {
         />
       </GridItem>
       <GridItem colSpan={7}>
-        <Grid className="grid-card" templateColumns="repeat(5, 1fr)" gap={5} p={5}>
-          {products?.map((product, i) => {
-            return (
-              <GridItem key={product.id} w="50%">
-                <Box>
-                  <ProductCard
-                    id={product.id}
-                    image={product.image}
-                    productName={product.name}
-                    price={product.price}
-                    description={product.description}
-                    rating={product.rating}
-                  />
-                </Box>
-              </GridItem>
-            );
-          })}
-        </Grid>
+        {products ? (
+          <Grid className="grid-card" templateColumns="repeat(5, 1fr)" gap={5} p={5}>
+            {products?.map((product, i) => {
+              return (
+                <GridItem key={product.id} w="50%">
+                  <Box>
+                    <ProductCard
+                      id={product.id}
+                      image={product.image}
+                      productName={product.name}
+                      price={product.price}
+                      description={product.description}
+                      rating={product.rating}
+                    />
+                  </Box>
+                </GridItem>
+              );
+            })}
+          </Grid>
+        ) : (
+          <div>Loading...</div>
+        )
+        }
       </GridItem>
     </Grid>
   );
