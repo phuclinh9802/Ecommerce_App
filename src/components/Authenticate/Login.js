@@ -57,7 +57,7 @@ const Login = ({
   useEffect(() => {
     if (isAuthenticated && location.pathname !== "/login") {
       history.push(location.pathname);
-    } else if (token) {
+    } else if (isAuthenticated && token) {
       history.push("/dashboard");
     }
   }, [isAuthenticated, token, me]);
