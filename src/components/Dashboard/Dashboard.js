@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import "./Dashboard.css";
 
-const slides = ["/img/eslide1.jpg", "/img/eslide2.jpg", "/img/eslide3.jpg"];
+const slides = ["/Ecommerce_App/img/eslide1.jpg", "/Ecommerce_App/img/eslide2.jpg", "/Ecommerce_App/img/eslide3.jpg"];
 const delay = 6000;
 
 const Dashboard = () => {

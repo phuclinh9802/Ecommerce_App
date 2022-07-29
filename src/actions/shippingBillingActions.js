@@ -5,7 +5,7 @@ import { UPDATE_ADDRESS } from './types';
 const token = localStorage.getItem("jwtToken");
 
 export const updateAddress = (data) => async (dispatch) => {
-  await axios.put('/api/users/shipping-billing', data, { headers: { Authorization: token } }).then(async (res) => {
+  await axios.put('https://ecommerce-backend-cheapi.herokuapp.com/api/users/shipping-billing', data, { headers: { Authorization: token } }).then(async (res) => {
     await dispatch(updateShippingBillingAddress(data))
   })
 }

@@ -57,7 +57,7 @@ const Login = ({
     if (isAuthenticated && location.pathname !== "/login") {
       history.push(location.pathname);
     } else if (isAuthenticated) {
-      history.push("/dashboard");
+      history.push("/Ecommerce_App/dashboard");
     }
   }, [isAuthenticated]);
 
@@ -74,7 +74,7 @@ const Login = ({
           if (timer) clearInterval(timer);
           console.log("Yay we're authenticated");
           googleUser();
-          history.push("/dashboard");
+          history.push("/Ecommerce_App/dashboard");
         }
       }, 5000);
     }
