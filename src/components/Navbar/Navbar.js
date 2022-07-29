@@ -53,21 +53,24 @@ const Navbar = (props) => {
 
   const token = localStorage.getItem("jwtToken");
   useEffect(() => {
-    props.currentUser();
     if (token) {
-      let timer = setTimeout(() => {
-        toast({
-          position: "bottom-right",
-          title: "Hello, " + me.firstName + " " + me.lastName,
-          description: "Welcome to eComShop! ",
-          status: "success",
-          duration: 4000,
-          isClosable: true,
-        });
-      }, 2000)
-      return () => clearTimeout(timer);
+      props.currentUser();
     }
-  }, [token, me.firstName, me.lastName]);
+  }, [token]);
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      toast({
+        position: "bottom-right",
+        title: "Hello, " + me.firstName + " " + me.lastName,
+        description: "Welcome to eComShop! ",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+    }, 2000)
+    return () => clearTimeout(timer);
+  }, [me.firstName, me.lastName])
 
   // register modal
   const {
