@@ -21,7 +21,7 @@ export const registerUser = (userData, history) => async (dispatch) => {
 // google
 export const googleUser = () => async (dispatch) => {
   await axios
-    .get(`${process.env.REACT_APP_BACKEND}/auth/google/success`)
+    .get(`${process.env.REACT_APP_BACKEND}/auth/google/success`, { withCredentials: true })
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
