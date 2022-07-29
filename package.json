@@ -73,7 +73,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://ecommerce-backend-cheapi.herokuapp.com/",
+  "proxy": "https://ecommerce-backend-cheapi.herokuapp.com",
   "devDependencies": {
     "gh-pages": "^4.0.0"
   }
