@@ -11,14 +11,14 @@ export const getProducts = () => (dispatch) => {
 };
 
 export const currentProduct = (index) => async (dispatch) => {
-  await axios.get(`${process.env.backendURI}/api/product/${index}`).then((res) => {
+  await axios.get(`${process.env.REACT_APP_BACKEND}/api/product/${index}`).then((res) => {
     const data = res.data;
     dispatch(getProduct(data));
   });
 };
 
 export const createProduct = (productData) => (dispatch) => {
-  axios.post(`${process.env.backendURI}/api/product`, productData, { headers: { Authorization: token } }).then((res) => {
+  axios.post(`${process.env.REACT_APP_BACKEND}/api/product`, productData, { headers: { Authorization: token } }).then((res) => {
     dispatch(setProduct(productData))
   })
 }
