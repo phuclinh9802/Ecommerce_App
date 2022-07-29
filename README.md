@@ -1,2 +1,2 @@
 # Ecommerce_App
-Just an app using React
+Just an app using React, Deployed on Heroku!!!!
