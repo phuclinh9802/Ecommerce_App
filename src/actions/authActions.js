@@ -13,7 +13,7 @@ import {
 // register
 export const registerUser = (userData, history) => async (dispatch) => {
   await axios
-    .post("https://ecommerce-backend-cheapi.herokuapp.com/api/users/register", userData)
+    .post("/api/users/register", userData)
     .then((res) => history.push("/")) //redirect to login
     .catch((err) => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 };
@@ -43,7 +43,7 @@ export const googleUser = () => async (dispatch) => {
 // github
 export const githubUser = () => async (dispatch) => {
   await axios
-    .get("https://ecommerce-backend-cheapi.herokuapp.com/auth/github/success")
+    .get("/auth/github/success")
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
@@ -66,7 +66,7 @@ export const githubUser = () => async (dispatch) => {
 export const loginUser = (userData) => async (dispatch) => {
   // const history = useHistory();
   await axios
-    .post("https://ecommerce-backend-cheapi.herokuapp.com/api/users/login", userData)
+    .post("/api/users/login", userData)
     .then(async (res) => {
       // save to localStorage
       // set token to localStorage
@@ -92,7 +92,7 @@ export const loginUser = (userData) => async (dispatch) => {
 export const currentUser = () => async (dispatch) => {
   const token = localStorage.getItem("jwtToken");
   await axios
-    .get("https://ecommerce-backend-cheapi.herokuapp.com/api/users/me", { headers: { Authorization: token } })
+    .get("/api/users/me", { headers: { Authorization: token } })
     .then(async (res) => {
       // get data
       const data = await res.data;

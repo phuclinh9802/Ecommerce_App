@@ -1,7 +1,6 @@
 {
   "name": "shopping-web",
   "version": "0.1.0",
-  "homepage": "https://phuclinh9802.github.io/Ecommerce_App",
   "private": true,
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
