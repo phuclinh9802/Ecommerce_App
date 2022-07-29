@@ -25,7 +25,7 @@ const ProductList = ({ getProducts }) => {
       </GridItem>
       <GridItem colSpan={7}>
         <Grid className="grid-card" templateColumns="repeat(5, 1fr)" gap={5} p={5}>
-          {products.map((product, i) => {
+          {products?.map((product, i) => {
             return (
               <GridItem key={product.id} w="50%">
                 <Box>
