@@ -54,6 +54,10 @@ const Login = ({
   const errors = useSelector((state) => state.errors);
   const token = localStorage.getItem("jwtToken");
 
+  console.log(me)
+  console.log(token)
+  console.log(location.pathname)
+
   useEffect(() => {
     if (isAuthenticated && location.pathname !== "/login") {
       history.push(location.pathname);
