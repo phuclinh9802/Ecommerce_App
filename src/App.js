@@ -43,15 +43,15 @@ function App() {
                 <Redirect to="/dashboard" />
               </Route>
 
-              <Route exact path={["/Ecommerce_App/", "/Ecommerce_App/dashboard"]}>
+              <Route exact path={["/", "/dashboard"]}>
                 <Dashboard />
               </Route>
-              <Route exact path="/Ecommerce_App/login/success">
+              <Route exact path="/login/success">
                 <LoginSuccess />
               </Route>
 
               <Route
-                path="/Ecommerce_App/products/:id"
+                path="/products/:id"
                 render={
                   ({ match }) => (
                     <ProductDetails
@@ -62,10 +62,10 @@ function App() {
                   )
                 }
               />
-              <Route path="/Ecommerce_App/admin/product/create">
+              <Route path="/admin/product/create">
                 <CreateProduct />
               </Route>
-              <Route path="/Ecommerce_App/users/shipping">
+              <Route path="/users/shipping">
                 <ShippingPayment />
               </Route>
             </Switch>
