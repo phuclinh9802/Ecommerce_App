@@ -4,7 +4,7 @@ import { GET_PRODUCTS, GET_PRODUCT, CREATE_PRODUCT } from "./types";
 
 const token = localStorage.getItem("jwtToken");
 export const getProducts = () => (dispatch) => {
-  axios.get(`${process.env.backendURI}/api/product`, { Authorization: token }).then((res) => {
+  axios.get(`${process.env.REACT_APP_BACKEND}/api/product`, { Authorization: token }).then((res) => {
     const data = res.data;
     dispatch(getListProducts(data));
   });

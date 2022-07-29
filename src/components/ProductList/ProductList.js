@@ -1,21 +1,19 @@
 import { useEffect } from "react";
-
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import ProductCard from "./ProductCard";
 import Sidebar from "../Sidebar/Sidebar";
-import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import { connect, useSelector } from "react-redux";
 import "./ProductList.css";
 import { getProducts } from "../../actions/productActions";
-
-const ProductList = () => {
+const ProductList = ({ getProducts }) => {
   const product = useSelector((state) => state.products);
-  const dispatch = useDispatch();
   const { products } = product;
 
 
   useEffect(() => {
-    dispatch(getProducts());
-  }, [products]);
+    getProducts();
+  }, []);
 
   return (
     <Grid templateColumns="repeat(8, 1fr)" gap={2}>
@@ -53,4 +51,10 @@ const ProductList = () => {
 };
 
 
-export default ProductList;
+ProductList.propTypes = {
+  getProducts: PropTypes.func.isRequired,
+};
+const mapStateToProps = (state) => ({
+  products: state.products,
+});
+export default connect(mapStateToProps, { getProducts })(ProductList);
