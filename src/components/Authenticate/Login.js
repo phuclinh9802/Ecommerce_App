@@ -47,19 +47,20 @@ const Login = ({
   const initialRef = useRef();
   const finalRef = useRef();
   const auth = useSelector((state) => state.auth);
-  const { isAuthenticated } = auth;
+  const { isAuthenticated, me } = auth;
 
   const history = useHistory();
   const location = useLocation();
   const errors = useSelector((state) => state.errors);
+  const token = localStorage.getItem("jwtToken");
 
   useEffect(() => {
     if (isAuthenticated && location.pathname !== "/login") {
       history.push(location.pathname);
-    } else if (isAuthenticated) {
+    } else if (token) {
       history.push("/dashboard");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, token, me]);
 
   const handleGoogle = () => {
     const newWindow = window.open(
