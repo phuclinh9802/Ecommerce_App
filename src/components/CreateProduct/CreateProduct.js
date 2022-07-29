@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PRODUCT_DESCRIPTION, PRODUCT_IMAGE, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_QUANTITY } from "../../constants/product";
 import { createProduct } from "../../actions/productActions";
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useHistory } from "react-router-dom";
 import { FormControl, FormLabel, Input, Button, useToast, Textarea } from '@chakra-ui/react';
@@ -17,10 +17,7 @@ const CreateProduct = ({ createProduct }) => {
     quantity: '0'
   });
 
-  const history = useHistory();
   const toast = useToast();
-  const productReducer = useSelector((state) => state.products);
-  const { products } = productReducer;
 
   const handleSubmit = (e) => {
     e.preventDefault();

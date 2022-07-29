@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_PRODUCTS, GET_PRODUCT, CREATE_PRODUCT, UPDATE_QUANTITY_PRODUCT } from "./types";
+import { GET_PRODUCTS, GET_PRODUCT, CREATE_PRODUCT } from "./types";
 
 const token = localStorage.getItem("jwtToken");
 export const getProducts = () => (dispatch) => {
@@ -23,12 +23,7 @@ export const createProduct = (productData) => (dispatch) => {
   })
 }
 
-export const updateQtyProduct = (qty, price) => dispatch => {
-  return dispatch({
-    type: UPDATE_QUANTITY_PRODUCT,
-    payload: { qty, price },
-  })
-}
+
 
 export const getListProducts = (data) => {
   return {

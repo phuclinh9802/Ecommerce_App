@@ -14,11 +14,11 @@ import {
 import "./ProductDetails.css";
 import { ADD_TO_CART, BUY_NOW_BUTTON } from "../../constants/button";
 import { useSelector, connect } from "react-redux";
-import { currentProduct, updateQtyProduct } from "../../actions/productActions";
+import { currentProduct } from "../../actions/productActions";
 import PropTypes from "prop-types";
 import { StarBorder, Star, AttachMoney } from "@material-ui/icons";
 import CartDrawer from "../CartDrawer/CartDrawer";
-import { postCart } from '../../actions/cartActions';
+import { postCart, updateQtyProduct } from '../../actions/cartActions';
 import { v4 as uuidv4 } from 'uuid'
 
 const ProductDetails = ({ currentProduct, postCart, updateQtyProduct }) => {
@@ -28,20 +28,17 @@ const ProductDetails = ({ currentProduct, postCart, updateQtyProduct }) => {
   const products = useSelector((state) => state.products);
   const cart = useSelector((state) => state.cart);
   const { items } = cart;
-  const { product, qty, price } = products;
+  const { product } = products;
   const history = useHistory();
 
   const params = useParams();
 
   let uniqueId = uuidv4();
-  console.log(uniqueId)
 
 
   const handleChange = (e) => {
     setSelect(e.target.value)
   }
-  console.log('qty: ' + select)
-  console.log('price: ', Number(product.price) * select);
 
   const handleClick = () => {
     const data = {

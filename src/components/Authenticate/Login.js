@@ -47,8 +47,7 @@ const Login = ({
   const initialRef = useRef();
   const finalRef = useRef();
   const auth = useSelector((state) => state.auth);
-  const { user, isAuthenticated, me } = auth;
-  const toast = useToast();
+  const { isAuthenticated } = auth;
 
   const history = useHistory();
   const location = useLocation();
@@ -56,27 +55,15 @@ const Login = ({
 
   useEffect(() => {
     if (isAuthenticated && location.pathname !== "/login") {
-      console.log("different");
       history.push(location.pathname);
     } else if (isAuthenticated) {
-      console.log("different here");
       history.push("/dashboard");
     }
-    // else if (Object.keys(errors).length > 0) {
-    //   toast({
-    //     position: "bottom-right",
-    //     title: "Please check your username/password",
-    //     description: JSON.stringify(errors),
-    //     status: "error",
-    //     duration: 5000,
-    //     isClosable: true,
-    //   });
-    // }
   }, [isAuthenticated]);
 
   const handleGoogle = () => {
     const newWindow = window.open(
-      "http://localhost:5000/auth/google",
+      process.env.googleURI,
       "_blank",
       "width=500,height=600"
     );
@@ -91,20 +78,11 @@ const Login = ({
         }
       }, 5000);
     }
-
-    // toast({
-    //   position: "bottom-right",
-    //   title: "Hello, " + me.firstName + " " + me.lastName,
-    //   description: "Welcome to eComShop! ",
-    //   status: "success",
-    //   duration: 5000,
-    //   isClosable: true,
-    // });
   };
 
   const handleGithub = () => {
     const newWindow = window.open(
-      "http://localhost:5000/auth/github/",
+      process.env.githubURI,
       "_blank",
       "width=500,height=600"
     );
@@ -133,14 +111,11 @@ const Login = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     loginUser(userInfo);
-    console.log("me: " + JSON.stringify(me));
     history.push("/dashboard");
     onClose();
 
   };
 
-  let err = [];
-  let desc = "";
   const onSubmit = () => {
     if (isAuthenticated) {
       if (Object.keys(errors) > 0) {

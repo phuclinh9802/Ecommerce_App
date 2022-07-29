@@ -19,7 +19,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import SearchBar from "material-ui-search-bar";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import Login from "../Authenticate/Login";
 import Register from "../Authenticate/Register";
@@ -43,23 +43,18 @@ const Navbar = (props) => {
   const [isLight, setIsLight] = useState(true);
   const [searchText, setSearchText] = useState("");
   const auth = useSelector((state) => state.auth);
-  const { user, isAuthenticated, me } = auth;
+  const { isAuthenticated, me } = auth;
   const errors = useSelector((state) => state.errors);
   const toast = useToast();
 
-  console.log('Navbar: ' + user.firstName)
-  console.log('Navbar: ' + isAuthenticated);
 
   // login modal
   const { onOpen, isOpen, onClose } = useDisclosure();
 
   const token = localStorage.getItem("jwtToken");
-  // console.log("currentUser: " + currentUser);
-  console.log("token: " + token);
   useEffect(() => {
     props.currentUser();
     if (token) {
-      console.log(me.firstName);
       let timer = setTimeout(() => {
         toast({
           position: "bottom-right",

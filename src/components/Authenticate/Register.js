@@ -61,7 +61,6 @@ class Register extends Component {
             password2: this.state.password2,
         };
         this.props.registerUser(newUser, this.props.history)
-        console.log(newUser)
     };
 
 
@@ -72,9 +71,6 @@ class Register extends Component {
 
         return (
             <>
-                {/* <Button colorScheme="teal" onClick={onOpen}>
-        {SIGN_UP}
-      </Button> */}
                 <Modal
                     initialFocusRef={this.initialRef}
                     finalFocusRef={this.finalRef}
@@ -137,7 +133,6 @@ class Register extends Component {
                                 form="register-form"
                                 onClick={() => {
                                     onClose();
-                                    console.log("success!");
                                 }}
                             >
                                 Register

@@ -1,8 +1,6 @@
 import axios from "axios";
 
 const setAuthToken = (token) => {
-  // if token exists
-  console.log(token);
 
   if (token) {
     // apply token to every http request when logged in

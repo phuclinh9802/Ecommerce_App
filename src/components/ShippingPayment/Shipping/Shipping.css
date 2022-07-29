@@ -1,0 +1,9 @@
+@media screen and (max-width: 1500px) {
+  .ship-form {
+    width: 90%;
+  }
+
+  .bill-form {
+    width: 90%;
+  }
+}

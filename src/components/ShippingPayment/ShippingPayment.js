@@ -8,15 +8,17 @@ import {
   Text,
   Divider,
   Flex,
+  useColorMode,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 const ShippingPayment = () => {
-  const handleSubmit = (e) => {};
-  const handleClick = (e) => {};
+  const { colorMode } = useColorMode();
+
+  const handleSubmit = (e) => { };
+  const handleClick = (e) => { };
 
   const items = useSelector((state) => state.cart.items);
 
-  console.log(JSON.stringify(items));
   let allPrice = 0;
   items.forEach((item) => {
     allPrice = allPrice + item.price * item.quantity;
@@ -28,7 +30,7 @@ const ShippingPayment = () => {
         <Shipping />
       </GridItem>
       <GridItem pt={10}>
-        <Box p={5} border="1px" borderColor="blackAlpha.500">
+        <Box p={5} border="1px" borderColor={colorMode === 'light' ? 'blackAlpha.500' : 'whiteAlpha.600'}>
           <Box p={2} pb={5}>
             <Text fontSize={"lg"} fontWeight="bold">
               Your Order
@@ -57,12 +59,11 @@ const ShippingPayment = () => {
                   </GridItem>
                   <GridItem>
                     <Text fontSize="sm">{el.name}</Text>
-                    <Text fontSize="sm" color="blackAlpha.500">
+                    <Text fontSize="sm" color={colorMode === 'light' ? 'blackAlpha.500' : 'whiteAlpha.600'}>
                       ${el.price}
                     </Text>
                   </GridItem>
                   <GridItem>
-                    {/* <Center> */}
                     <Flex justifyContent={"flex-end"}>
                       <Text fontWeight={"bold"} fontSize="md">
                         ${totalPrice}
@@ -73,7 +74,6 @@ const ShippingPayment = () => {
                         <em>Qty: {el.quantity}</em>
                       </Text>
                     </Flex>
-                    {/* </Center> */}
                   </GridItem>
                 </Grid>
               );

@@ -9,7 +9,6 @@ import {
   SET_CURRENT_USER,
   USER_LOADING,
 } from "./types";
-import { useHistory } from "react-router-dom";
 
 // register
 export const registerUser = (userData, history) => async (dispatch) => {
@@ -21,24 +20,19 @@ export const registerUser = (userData, history) => async (dispatch) => {
 
 // google
 export const googleUser = () => async (dispatch) => {
-  console.log("google");
   await axios
     .get("/auth/google/success")
     .then((res) => {
-      console.log(res.data);
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
       // set token to auth header
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
-      console.log(decoded);
       // set current user
       dispatch(setCurrentUser(decoded));
-      console.log(JSON.stringify(res.data));
     })
     .catch((err) => {
-      console.log(err.response.data);
       return dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
@@ -48,24 +42,19 @@ export const googleUser = () => async (dispatch) => {
 
 // github
 export const githubUser = () => async (dispatch) => {
-  console.log("github");
   await axios
     .get("/auth/github/success")
     .then((res) => {
-      console.log(res.data);
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
       // set token to auth header
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
-      console.log("decoded: " + decoded);
       // set current user
       dispatch(setCurrentUser(decoded));
-      console.log(JSON.stringify(res.data));
     })
     .catch((err) => {
-      console.log(err.response.data);
       return dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
@@ -92,7 +81,6 @@ export const loginUser = (userData) => async (dispatch) => {
       // history.push("/dashboard");
     })
     .catch((err) => {
-      console.log(err.response.data);
       return dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
@@ -114,7 +102,6 @@ export const currentUser = () => async (dispatch) => {
       }
     })
     .catch((err) => {
-      console.log(err.response.data);
       return dispatch({
         type: GET_ERRORS,
         payload: err.response.data,

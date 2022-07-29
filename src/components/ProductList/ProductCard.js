@@ -8,7 +8,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { StarBorder, Star, FavoriteBorder, Favorite } from "@material-ui/icons";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, connect } from "react-redux";
 import { currentProduct } from "../../actions/productActions";
 import PropTypes from "prop-types";
@@ -16,13 +16,9 @@ import PropTypes from "prop-types";
 import './ProductCard.css';
 
 const ProductCard = (props) => {
-  const { id, image, productName, price, rating } = props;
+  const { id, image, productName, price } = props;
   const products = useSelector((state) => state.products);
   const { product } = products;
-  const history = useHistory();
-  const handleLink = (e) => {
-    history.push(`/${id}`);
-  };
   return (
     <Box w="300px" rounded="20px" overflow="hidden" bg="" mt={10}>
       <Center>
@@ -61,29 +57,6 @@ const ProductCard = (props) => {
             ${price}
           </Text>
         </Stack>
-        {/* <Flex mt={4}>
-          <Spacer />
-
-          <Button
-            mr={2}
-            variant="link"
-            colorScheme="black"
-            size="md"
-            justifyContent="center"
-          >
-            {BUY_BUTTON}
-          </Button>
-          <Button
-            variant="link"
-            ml={2}
-            colorScheme="black"
-            size="md"
-            justifyContent="center"
-          >
-            {ADD_TO_CART}
-          </Button>
-          <Spacer />
-        </Flex> */}
       </Box>
     </Box>
   );

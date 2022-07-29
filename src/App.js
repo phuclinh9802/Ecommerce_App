@@ -9,12 +9,10 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import Register from "./components/Authenticate/Register";
-import Login from "./components/Authenticate/Login";
-import Logout from "./components/Authenticate/Logout";
+// import Register from "./components/Authenticate/Register";
+// import Login from "./components/Authenticate/Login";
+// import Logout from "./components/Authenticate/Logout";
 import { Center, ChakraProvider, Spinner } from "@chakra-ui/react";
-
-import { useSelector } from "react-redux";
 import CreateProduct from './components/CreateProduct/CreateProduct';
 import { LoginSuccess } from './components/Authenticate/LoginSuccess';
 import ShippingPayment from './components/ShippingPayment/ShippingPayment';
@@ -41,9 +39,6 @@ function App() {
 
             <Navbar />
             <Switch>
-              {/* <Route exact path='/dashboard' element={<PrivateRoute Component={<Dashboard />} />} /> */}
-              {/* <Route exact path="/login" element={<Login />} /> */}
-              {/* <Route exact path="/dashboard" element={<Dashboard />} /> */}
               <Route exact path="/">
                 <Redirect to="/dashboard" />
               </Route>
@@ -73,9 +68,6 @@ function App() {
               <Route path="/users/shipping">
                 <ShippingPayment />
               </Route>
-              {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-              {/* <Route exact path="/register" element={<Register />} />
-            <Route exact path="/logout" element={<Logout />} /> */}
             </Switch>
           </Suspense>
         </Router>

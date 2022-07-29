@@ -13,31 +13,24 @@ import {
   Divider,
   Text,
   DrawerFooter,
+  useColorMode,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { deleteCart } from "../../actions/cartActions";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useEffect } from "react";
 import { updateQtyProduct } from "../../actions/cartActions";
 import { Link } from "react-router-dom";
 
 
 const CartDrawer = ({ onClose, isOpen, data, deleteCart, updateQtyProduct }) => {
+  const { colorMode } = useColorMode();
   const cart = useSelector((state) => state.cart)
-  const products = useSelector((state) => state.products);
   let { items } = cart;
-  let { qty, price } = products;
-
-
-
-  // console.log('quantity: ' + quantity)
-  // console.log('price: ' + price)
 
   const handleDelete = (id) => {
     deleteCart(id)
   }
-  // console.log(JSON.stringify(data))
 
   return (
     <Drawer placement="right" size={'xl'} onClose={onClose} isOpen={isOpen}>
@@ -59,7 +52,7 @@ const CartDrawer = ({ onClose, isOpen, data, deleteCart, updateQtyProduct }) => 
                     </GridItem>
                     <GridItem >
                       <p>{el.name}</p>
-                      <Text fontSize="sm" color='blackAlpha.500'>${el.price}</Text>
+                      <Text fontSize="sm" color={colorMode === 'light' ? 'blackAlpha.500' : 'whiteAlpha.600'}>${el.price}</Text>
                     </GridItem>
                     <GridItem >
                       {/* <Center> */}

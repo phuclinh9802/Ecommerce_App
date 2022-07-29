@@ -13,11 +13,13 @@ import {
   useToast,
   Textarea,
   Divider,
+  useColorMode,
 } from "@chakra-ui/react";
 
-// import './CreateProduct.css'
+import './Shipping.css'
 
 const Shipping = ({ updateAddress }) => {
+  const { colorMode } = useColorMode();
   const history = useHistory();
   const toast = useToast();
 
@@ -76,7 +78,6 @@ const Shipping = ({ updateAddress }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(shippingBillingAddress);
     updateAddress(shippingBillingAddress);
 
     setShippingBillingAddress({
@@ -118,9 +119,10 @@ const Shipping = ({ updateAddress }) => {
         p={8}
         boxShadow={"base"}
         border="1px"
-        borderColor={"blackAlpha.500"}
+        borderColor={colorMode === 'light' ? 'blackAlpha.500' : 'whiteAlpha.600'}
         borderRadius={8}
         w={"4xl"}
+        className="ship-form"
       >
         <form id="shipping-form" onSubmit={(e) => handleSubmitShipping(e)}>
           <FormControl isRequired>
@@ -191,10 +193,11 @@ const Shipping = ({ updateAddress }) => {
         mt={10}
         p={8}
         border="1px"
-        borderColor={"blackAlpha.500"}
+        borderColor={colorMode === 'light' ? 'blackAlpha.500' : 'whiteAlpha.600'}
         boxShadow={"base"}
         borderRadius={8}
         w={"4xl"}
+        className="bill-form"
       >
         <form id="billing-form" onSubmit={(e) => handleSubmitBilling(e)}>
           <FormControl isRequired>

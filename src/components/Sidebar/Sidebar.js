@@ -25,7 +25,6 @@ const LinkItems = [
 ];
 
 export default function SimpleSidebar() {
-  // bg={useColorModeValue("gray.100", "gray.900")}
   return (
     <Box display="block">
       <SidebarContent />
@@ -34,11 +33,8 @@ export default function SimpleSidebar() {
 }
 
 const SidebarContent = ({ ...rest }) => {
-  // bg={useColorModeValue("white", "gray.900")}
   return (
     <Box
-      // borderRight="1px"
-      // borderRightColor={useColorModeValue("gray.200", "gray.700")}
       w={{ base: "full", md: 60 }}
       pos="sticky"
       h="full"
