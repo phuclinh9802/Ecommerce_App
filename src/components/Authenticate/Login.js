@@ -63,7 +63,7 @@ const Login = ({
 
   const handleGoogle = () => {
     const newWindow = window.open(
-      process.env.googleURI,
+      process.env.REACT_APP_GOOGLE_URI,
       "_blank",
       "width=500,height=600"
     );
@@ -82,7 +82,7 @@ const Login = ({
 
   const handleGithub = () => {
     const newWindow = window.open(
-      process.env.githubURI,
+      process.env.REACT_APP_GITHUB_URI,
       "_blank",
       "width=500,height=600"
     );
